@@ -27,7 +27,7 @@ namespace MLTag
         private List<Recommender> rcs = new List<Recommender>();
         private Dictionary<Tag, int> dict = new Dictionary<Tag, int>();
         private IOrderedEnumerable<Tag> tags;
-        private readonly double treshold = 0.6d;
+        private readonly double threshold = 0.6d;
         private int nbTags;
 
         public int NumberOfTags {
@@ -85,7 +85,7 @@ namespace MLTag
             return ret
                 .Zip(tags, (x, y) => new Tuple<Tag, double>(y, x))
                 .OrderBy(x => x.Item2)
-                .Where(x => x.Item2 > treshold);
+                .Where(x => x.Item2 > threshold);
         }
     }
 }
