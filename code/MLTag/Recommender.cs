@@ -9,25 +9,25 @@ namespace MLTag
     using Tag = String;
     public interface Recommender
     {
-        public int NumberOfTags {
+        int NumberOfTags {
             get;
             set;
         }
-        public void Train(String text,IList<int> tags);
+        void Train(String text,IList<int> tags);
 
         /// <invar>return.Length == NumberOfTags</invar>
         /// <summary>
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public IList<Double> Tag(String text);
+        IEnumerable<Double> Tag(String text);
     }
 
     public class VotingSystem : Recommender {
         private List<Recommender> rcs = new List<Recommender>();
         private Dictionary<Tag, int> dict = new Dictionary<Tag, int>();
         private IOrderedEnumerable<Tag> tags;
-        private double treshold = 0.6d;
+        private readonly double treshold = 0.6d;
         private int nbTags;
 
         public int NumberOfTags {
@@ -71,7 +71,7 @@ namespace MLTag
         public IEnumerable<double> Tag(string text) {
             IEnumerable<double> total = new List<double>(NumberOfTags);
             foreach(Recommender r in rcs){
-                IList<double> cur = r.Tag(text);
+                IEnumerable<double> cur = r.Tag(text);
                 total = total.Zip(cur, (x,y) => x+y);
             }
             total = total.Select((x) => x / NumberOfTags);
@@ -82,7 +82,10 @@ namespace MLTag
         public IEnumerable<Tuple<Tag,double>> TagFiltered(string text) {
             IEnumerable<double> ret = Tag(text);
             
-            return ret.Zip(tags, (x, y) => new Tuple<Tag, double>(y, x));
+            return ret
+                .Zip(tags, (x, y) => new Tuple<Tag, double>(y, x))
+                .OrderBy(x => x.Item2)
+                .Where(x => x.Item2 > treshold);
         }
     }
 }

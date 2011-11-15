@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace MLTag {
 	
-	public class TagRecommendation {
+	public class TagRecommendation : Recommender {
 		
 		private readonly Dictionary<TextVector,ICollection<string>> memory = new Dictionary<TextVector,ICollection<string>>();
 		private const double treshold = 0.4d;
@@ -93,6 +93,23 @@ namespace MLTag {
 				}
 			}
 		}
-		
-	}
+
+
+        public int NumberOfTags {
+            get {
+                throw new NotImplementedException();
+            }
+            set {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void Train(string text, IList<int> tags) {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<double> Tag(string text) {
+            throw new NotImplementedException();
+        }
+    }
 }
