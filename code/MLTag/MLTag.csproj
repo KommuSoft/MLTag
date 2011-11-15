@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Recommender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagRecomendation.cs" />
     <Compile Include="TextVector.cs" />

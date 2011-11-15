@@ -5,13 +5,13 @@ using System.Text.RegularExpressions;
 
 namespace MLTag {
 	
-	public class TagRecomendation {
+	public class TagRecommendation {
 		
 		private readonly Dictionary<TextVector,ICollection<string>> memory = new Dictionary<TextVector,ICollection<string>>();
 		private const double treshold = 0.4d;
 		private static readonly Regex trainingRegex = new Regex(@"^([^#]+)( +#([^# ]+))+ *$",RegexOptions.Compiled);
 		
-		public TagRecomendation () {
+		public TagRecommendation () {
 		}
 		
 		public void Train (string text, ICollection<string> tags) {
@@ -63,7 +63,7 @@ namespace MLTag {
 		}
 		
 		public static int Main (string[] args) {//run met "mono MLTag.exe todos"
-			TagRecomendation tr = new TagRecomendation();
+			TagRecommendation tr = new TagRecommendation();
 			if(args.Length > 0) {
 				Stream s = File.Open(args[0],FileMode.Open,FileAccess.Read);
 				TextReader r = new StreamReader(s);
