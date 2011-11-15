@@ -5,15 +5,8 @@ using System.Text;
 
 namespace MLTag
 {
-    public class Tag {
-        private String tagName;
 
-        public String TagName {
-            get { return tagName; }
-            set { tagName = value; }
-        }        
-    }
-
+    using Tag = String;
     public interface Recommender
     {
         public int NumberOfTags {
@@ -30,10 +23,11 @@ namespace MLTag
         public IList<Double> Tag(String text);
     }
 
-    public class VotingSystem : Recommender
-    {
+    public class VotingSystem : Recommender {
         private List<Recommender> rcs = new List<Recommender>();
-        private Dictionary<String, int> dict = new Dictionary<String, int>();
+        private Dictionary<Tag, int> dict = new Dictionary<Tag, int>();
+        private IOrderedEnumerable<Tag> tags;
+        private double treshold = 0.6d;
         private int nbTags;
 
         public int NumberOfTags {
@@ -45,9 +39,10 @@ namespace MLTag
             }
         }
 
-        public VotingSystem(ICollection<String> tags) {
+        public VotingSystem(ICollection<Tag> tags) {
             int c = 0;
-            foreach (string tag in tags) {
+            this.tags = tags.OrderBy(x => x);
+            foreach (Tag tag in this.tags) {
                 dict.Add(tag, c);
                 c++;
             }
@@ -59,7 +54,7 @@ namespace MLTag
             r.NumberOfTags = NumberOfTags;
         }
 
-        public void Train(string text, IList<string> tags) {
+        public void Train(string text, IList<Tag> tags) {
             IList<int> tagNbs = new List<int>();
             foreach (string t in tags) {
                 tagNbs.Add(dict[t]);
@@ -73,8 +68,21 @@ namespace MLTag
             }
         }
 
-        public IList<double> Tag(string text) {
-            throw new NotImplementedException();
+        public IEnumerable<double> Tag(string text) {
+            IEnumerable<double> total = new List<double>(NumberOfTags);
+            foreach(Recommender r in rcs){
+                IList<double> cur = r.Tag(text);
+                total = total.Zip(cur, (x,y) => x+y);
+            }
+            total = total.Select((x) => x / NumberOfTags);
+
+            return total;
+        }
+
+        public IEnumerable<Tuple<Tag,double>> TagFiltered(string text) {
+            IEnumerable<double> ret = Tag(text);
+            
+            return ret.Zip(tags, (x, y) => new Tuple<Tag, double>(y, x));
         }
     }
 }
