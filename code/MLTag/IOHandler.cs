@@ -61,6 +61,10 @@ namespace MLTag {
 				return 0;
 			}
 			string[] tags = new string[]{"shop","sport","travel","home","reading","work","mlcourse","family","appointment","chore","urgent","school","finance","leisure","friends"};
+			metrics.Add(new TruePositivesMetric());
+			metrics.Add(new FalsePositivesMetric());
+			metrics.Add(new TrueNegativesMetric(tags.Length));
+			metrics.Add(new FalseNegativesMetric());
 			metrics.Add(new PrecisionMetric());
 			metrics.Add(new RecallMetric());
 			metrics.Add(new AccuracyMetric());

@@ -24,6 +24,10 @@
     <File subtype="Code" buildaction="Compile" name="PrecisionMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="AccuracyMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="HammingLossMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="TruePositivesMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="FalsePositivesMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="FalseNegatives.cs" />
+    <File subtype="Code" buildaction="Compile" name="TrueNegatives.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
