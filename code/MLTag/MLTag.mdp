@@ -3,7 +3,7 @@
     <Configuration name="Debug|x86" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="MLTag" />
       <Build debugmode="True" target="Exe" />
-      <Execution consolepause="True" externalconsole="True" commandlineparameters="todos" runwithwarnings="True" runtime="MsNet" />
+      <Execution consolepause="True" externalconsole="True" commandlineparameters="todos todos" runwithwarnings="True" runtime="MsNet" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release|x86" ctype="DotNetProjectConfiguration">
@@ -19,8 +19,14 @@
     <File subtype="Code" buildaction="Compile" name="CustomRecommender.cs" />
     <File subtype="Code" buildaction="Compile" name="TextVector.cs" />
     <File subtype="Code" buildaction="Compile" name="VotingSystem.cs" />
+    <File subtype="Code" buildaction="Compile" name="Metric.cs" />
+    <File subtype="Code" buildaction="Compile" name="RecallMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="PrecisionMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="AccuracyMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="HammingLossMetric.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </References>
 </Project>
