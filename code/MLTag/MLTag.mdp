@@ -3,7 +3,7 @@
     <Configuration name="Debug|x86" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="MLTag" />
       <Build debugmode="True" target="Exe" />
-      <Execution consolepause="True" externalconsole="True" commandlineparameters="todos todos" runwithwarnings="True" runtime="MsNet" />
+      <Execution consolepause="True" externalconsole="True" commandlineparameters="todos2 todos log" runwithwarnings="True" runtime="MsNet" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release|x86" ctype="DotNetProjectConfiguration">

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MLTag {
 
@@ -15,6 +16,8 @@ namespace MLTag {
 		private static RatioHandler ratio = (x => 1.0d-Math.Sqrt(x));//1-sqrt(x)
 		//private static RatioHandler ratio = (x => -x*Math.Log(x));//Entropy
 		private static double tresholdRatio = 0.1d;
+		//private static Regex punctuation = new Regex(@"[!@#%^&*()+=-_<>,./?|\:;{}']+",RegexOptions.Compiled|RegexOptions.IgnoreCase);
+		//private static Regex normalisation = new Regex(@"ing|ed|s$",RegexOptions.Compiled);
 		
 		public int this [string term] {
 			get {
@@ -44,9 +47,11 @@ namespace MLTag {
 		
 		private static Dictionary<int,int> generateCounters (string text, bool newItems) {
 			Dictionary<int,int> counters = new Dictionary<int,int> ();
+			text = text.Normalize().Trim('?','\"', ',', '\'', ';', ':', '.', '(', ')',' ');
 			string[] terms = text.Split (new string[] {" "}, StringSplitOptions.RemoveEmptyEntries);//TODO: other split literals (punctuations).
 			int ind, val;
 			foreach (String s in terms) {
+				//s = normalisation.Replace(st,"");
 				if (!items.TryGetValue (s, out ind)) {
 					ind = items.Count;
 					if(newItems) {

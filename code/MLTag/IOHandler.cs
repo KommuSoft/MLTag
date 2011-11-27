@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Globalization;
 
 namespace MLTag {
 
@@ -55,7 +56,7 @@ namespace MLTag {
 			}
 		}
 		
-		public static int Main (string[] args) {//run met "mono MLTag.exe training"
+		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile testfile ?logfile"
 			if(args.Length <= 1) {
 				Console.WriteLine("INVALID PROGRAM USAGE!! Program format: MLTag train test");
 				return 0;
@@ -79,10 +80,23 @@ namespace MLTag {
 				Query(line);
 				line = r.ReadLine();
 			}
+			#endregion
+			#region TestInner
+			s.Position = 0;
+			line = r.ReadLine();
+			while(line != null) {
+				Test(line);
+				line = r.ReadLine();
+			}
 			r.Close();
 			s.Close();
+			Console.WriteLine("Inner Results:");
+			foreach(Metric m in metrics) {
+				Console.WriteLine("\t{0} = {1}",m.Name,m.Result);
+				m.Reset();
+			}
 			#endregion
-			#region Test
+			#region TestOuter
 			s = File.Open(args[1],FileMode.Open,FileAccess.Read);
 			r = new StreamReader(s);
 			line = r.ReadLine();
@@ -92,10 +106,36 @@ namespace MLTag {
 			}
 			r.Close();
 			s.Close();
-			#endregion
-			#region printResults
+			Console.WriteLine("Outer Results:");
 			foreach(Metric m in metrics) {
-				Console.WriteLine("{0} = {1}",m.Name,m.Result);
+				Console.WriteLine("\t{0} = {1}",m.Name,m.Result);
+			}
+			#endregion
+			#region writeLogs
+			TextWriter tw;
+			if(args.Length >= 3) {
+				if(!File.Exists(args[2])) {
+					s = File.Open(args[2],FileMode.Create,FileAccess.Write);
+					tw = new StreamWriter(s);
+					tw.Write("#");
+					foreach(Metric m in metrics) {
+						tw.Write("{0}\t",m.Name);
+					}
+					tw.Write("Comment");
+				}
+				else {
+					s = File.Open(args[2],FileMode.Append,FileAccess.Write);
+					tw = new StreamWriter(s);
+				}
+				tw.WriteLine();
+				foreach(Metric m in metrics) {
+					tw.Write("{0}\t",m.Result.ToString(NumberFormatInfo.InvariantInfo));
+				}
+				if(args.Length >= 4) {
+					tw.Write(args[3]);//write comment about the sample
+				}
+				tw.Close();
+				s.Close();
 			}
 			#endregion
 			return 0;

@@ -18,12 +18,15 @@ namespace MLTag {
 			}
 		}
 		public override void Process (IEnumerable<string> expected, IEnumerable<string> result) {
-			d++;
 			HashSet<string> section = new HashSet<string>(expected);
 			HashSet<string> union = new HashSet<string>(expected);
-			section.IntersectWith(result);
 			union.UnionWith(result);
-			score += (double) section.Count/union.Count;
+			int n = union.Count;
+			if(n != 0) {
+				section.IntersectWith(result);
+				score += (double) section.Count/union.Count;
+				d++;
+			}
 		}
 
 		public override void Reset () {

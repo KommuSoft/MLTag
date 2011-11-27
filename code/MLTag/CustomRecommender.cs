@@ -8,7 +8,7 @@ namespace MLTag {
 	public class CustomRecommender : Recommender {
 
 
-		private readonly Dictionary<TextVector, IList<int>> memory = new Dictionary<TextVector, IList<int>> ();
+		private readonly Dictionary<TextVector, Tuple<IList<int>,double>> memory = new Dictionary<TextVector, Tuple<IList<int>,double>> ();
 		private int not = 0;
 		//private const double threshold = 0.45d;
         
@@ -22,7 +22,22 @@ namespace MLTag {
 		}
 
 		public void Train (string text, IList<int> tags) {
-			memory.Add (new TextVector (text.ToLower()), tags);
+			TextVector tv = new TextVector (text.ToLower());
+			double score = 1.0d;
+			Stack<Tuple<TextVector,Tuple<IList<int>,double>>> toSet = new Stack<Tuple<TextVector, Tuple<IList<int>, double>>>();
+			foreach(KeyValuePair<TextVector, Tuple<IList<int>,double>> kvp in memory) {
+				double subscore = kvp.Key | tv;
+				if(subscore > double.Epsilon) {
+					toSet.Push(new Tuple<TextVector, Tuple<IList<int>,double>>(kvp.Key,new Tuple<IList<int>,double>(kvp.Value.Item1,kvp.Value.Item2+subscore)));
+					score += subscore;
+				}
+			}
+			Tuple<TextVector,Tuple<IList<int>,double>> item;
+			while(toSet.Count > 0) {
+				item = toSet.Pop();
+				memory[item.Item1] = item.Item2;
+			}
+			memory.Add (tv,new Tuple<IList<int>,double>(tags,score));
 		}
 
 		public IEnumerable<double> Tag (string text) {
@@ -30,11 +45,12 @@ namespace MLTag {
 			TextVector tv = new TextVector (text.ToLower(),false);
 			double total = 0.0d, score, temp;
 			Dictionary<int, double > tags = new Dictionary<int, double> ();
-			foreach (KeyValuePair<TextVector, IList<int>> kvp in memory) {
+			//Console.WriteLine("weights: ");
+			foreach (KeyValuePair<TextVector, Tuple<IList<int>,double>> kvp in memory) {
 				score = tv | kvp.Key;
-				score *= score;
+				score *= score/Math.Sqrt(kvp.Value.Item2);//devided by the inverse score of the sample
 				total += score;
-				foreach (int tag in kvp.Value) {
+				foreach (int tag in kvp.Value.Item1) {
 					if (!tags.TryGetValue (tag, out temp)) {
 						tags.Add (tag, 0.0d);
 						temp = 0.0d;
@@ -48,6 +64,7 @@ namespace MLTag {
 			foreach (KeyValuePair<int, double> kvp in tags) {
 				//if (kvp.Value / total >= threshold) {
 					result [kvp.Key] = kvp.Value / total;
+				//Console.WriteLine("{0}/{1}",kvp.Key,kvp.Value/total);
 				//}
 			}
 			return result;

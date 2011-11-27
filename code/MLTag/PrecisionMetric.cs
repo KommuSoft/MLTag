@@ -18,10 +18,10 @@ namespace MLTag {
 			}
 		}
 		public override void Process (IEnumerable<string> expected, IEnumerable<string> result) {
-			d++;
 			HashSet<string> section = new HashSet<string>(result);
 			int z = section.Count;
 			if(z != 0) {
+				d++;
 				section.IntersectWith(expected);
 				score += (double) section.Count/z;
 			}
