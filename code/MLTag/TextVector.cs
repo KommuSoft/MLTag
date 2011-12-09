@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.IO;
+using Lucene.Net.Analysis.Standard;
 
 namespace MLTag {
 
@@ -49,6 +51,15 @@ namespace MLTag {
 			Dictionary<int,int> counters = new Dictionary<int,int> ();
 			text = text.Normalize().Trim('?','\"', ',', '\'', ';', ':', '.', '(', ')',' ');
 			string[] terms = text.Split (new string[] {" "}, StringSplitOptions.RemoveEmptyEntries);//TODO: other split literals (punctuations).
+			/*TextReader tr = new StringReader(text);
+			StandardTokenizer t = new StandardTokenizer(tr);
+			Lucene.Net.Analysis.Token T = t.Next();
+			List<string> terms = new List<string>();
+			while(T != null) {
+				terms.Add(T.TermText());
+				T = t.Next();
+			}
+			tr.Close();*/
 			int ind, val;
 			foreach (String s in terms) {
 				//s = normalisation.Replace(st,"");

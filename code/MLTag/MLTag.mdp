@@ -28,9 +28,41 @@
     <File subtype="Code" buildaction="Compile" name="FalsePositivesMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="FalseNegatives.cs" />
     <File subtype="Code" buildaction="Compile" name="TrueNegatives.cs" />
+    <File subtype="Code" buildaction="Nothing" name="libs/AForge.Controls.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/AForge.Neuro.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/AForge.dll" />
+    <File subtype="Code" buildaction="Compile" name="AdditionalNeuralNetwork.cs" />
+    <File subtype="Code" buildaction="Compile" name="StringUtils.cs" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Contrib.Regex.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Contrib.Analyzers.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Contrib.Core.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Contrib.Highlighter.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Contrib.Queries.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Contrib.Similarity.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Contrib.Snowball.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Contrib.Spatial.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Contrib.SpellChecker.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.FastVectorHighlighter.dll" />
+    <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Search.SimpleFacetedSearch.dll" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/AForge.Controls.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/AForge.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/AForge.Neuro.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Contrib.Regex.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Contrib.Analyzers.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Contrib.Core.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Contrib.Highlighter.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Contrib.Queries.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Contrib.Similarity.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Contrib.Snowball.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Contrib.Spatial.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Contrib.SpellChecker.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.FastVectorHighlighter.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Search.SimpleFacetedSearch.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.dll" />
   </References>
 </Project>

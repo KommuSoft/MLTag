@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Globalization;
+using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Standard;
 
 namespace MLTag {
 
@@ -71,7 +73,7 @@ namespace MLTag {
 			metrics.Add(new AccuracyMetric());
 			metrics.Add(new HammingLossMetric(tags.Length));
 			vs = new VotingSystem (tags);
-			vs.AddRecommender (new CustomRecommender ());
+			vs.AddRecommender (new CustomRecommender (tags.Length));
 			#region Training
 			Stream s = File.Open(args[0],FileMode.Open,FileAccess.Read);
 			TextReader r = new StreamReader(s);

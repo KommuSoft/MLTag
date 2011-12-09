@@ -9,6 +9,7 @@ namespace MLTag {
 
 
 		private readonly Dictionary<TextVector, Tuple<IList<int>,double>> memory = new Dictionary<TextVector, Tuple<IList<int>,double>> ();
+		private AdditionalNeuralNetwork ann;
 		private int not = 0;
 		//private const double threshold = 0.45d;
         
@@ -21,6 +22,12 @@ namespace MLTag {
 			}
 		}
 
+		public CustomRecommender (int numberOfTags) {
+			this.not = numberOfTags;
+			//Console.WriteLine(numberOfTags);
+			this.ann = new AdditionalNeuralNetwork(numberOfTags);
+		}
+		
 		public void Train (string text, IList<int> tags) {
 			TextVector tv = new TextVector (text.ToLower());
 			double score = 1.0d;
@@ -38,9 +45,17 @@ namespace MLTag {
 				memory[item.Item1] = item.Item2;
 			}
 			memory.Add (tv,new Tuple<IList<int>,double>(tags,score));
+			double[] inp = this.Tag(text);
+			double[] outp = new double[not];
+			foreach(int t in tags) {
+				outp[t] = 1.0d;
+			}
+			//Console.WriteLine(string.Join(",",inp));
+			//Console.WriteLine(string.Join(",",outp));
+			ann.Learn(inp,outp);//*/
 		}
 
-		public IEnumerable<double> Tag (string text) {
+		public double[] Tag (string text) {
 			double[] result = new double[not];
 			TextVector tv = new TextVector (text.ToLower(),false);
 			double total = 0.0d, score, temp;
@@ -63,11 +78,19 @@ namespace MLTag {
 			}
 			foreach (KeyValuePair<int, double> kvp in tags) {
 				//if (kvp.Value / total >= threshold) {
-					result [kvp.Key] = kvp.Value / total;
+					result [kvp.Key] = Math.Sqrt(kvp.Value / total);
 				//Console.WriteLine("{0}/{1}",kvp.Key,kvp.Value/total);
 				//}
 			}
 			return result;
 		}
+
+		#region Recommender implementation
+		IEnumerable<double> Recommender.Tag (string text) {
+			double[] vals = this.Tag(text);
+			return ann.Activate(vals);
+			//return vals;
+		}
+		#endregion
 	}
 }

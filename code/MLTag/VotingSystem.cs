@@ -12,7 +12,7 @@ namespace MLTag {
 		private List<Recommender> rcs = new List<Recommender> ();
 		private Dictionary<Tag, int> dict = new Dictionary<Tag, int> ();
 		private IOrderedEnumerable<Tag> tags;
-		private double threshold = 0.23d;
+		private double threshold = 0.5d;
 		private int nbTags;
 
 		public int NumberOfTags {
