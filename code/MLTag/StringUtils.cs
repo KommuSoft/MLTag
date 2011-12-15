@@ -15,10 +15,10 @@ namespace MLTag {
 		private const int LEFT = 2;
 		private const int RIGHT = 2;
 		
-		public static int LevenshteinDistance (string a, string b) {
-			return LevenshteinDistance(a.ToCharArray(),b.ToCharArray());
+		public static int LevenshteinDistance (string a, string b, out float relevance) {
+			return LevenshteinDistance(a.ToCharArray(),b.ToCharArray(), out relevance);
 		}
-		public static int LevenshteinDistance<T> (IList<T> a, IList<T> b) where T:IComparable<T> {
+		public static int LevenshteinDistance<T> (IList<T> a, IList<T> b, out float relevance) where T:IComparable<T> {
 			int m = a.Count;
 			int n = b.Count;
 			int[,] grid = new int[m+1,n+1];
@@ -38,6 +38,7 @@ namespace MLTag {
 					}
 				}
 			}
+			relevance = 1.0f-(float) grid[m,n]/Math.Max(m,n);
 			return grid[m,n];
 		}
 		public static void ReadConfigStream (Stream stream) {
@@ -147,16 +148,23 @@ namespace MLTag {
 			//letters = word
 		}
 		public static string[] ToSyllables (string word) {
-			int[] splits = Hyphenate(word);
-			string[] syllables = new string[splits.Length+1];
-			int i1 = 0, i2;
-			for(int i = 0; i < splits.Length; i++) {
-				i2 = splits[i];
-				syllables[i] = word.Substring(i1,i2-i1);
-				i1 = i2;
+			string total = word+"-";
+			int j = total.IndexOf("-");
+			List<string> syl = new List<string>();
+			while(j != -1) {
+				word = word.Substring(0,j);
+				total = total.Substring(j+1);
+				int[] splits = Hyphenate(word);
+				int i1 = 0, i2;
+				for(int i = 0; i < splits.Length; i++) {
+					i2 = splits[i];
+					syl.Add(word.Substring(i1,i2-i1));
+					i1 = i2;
+				}
+				syl.Add(word.Substring(i1));
+				j = total.IndexOf("-");
 			}
-			syllables[splits.Length] = word.Substring(i1);
-			return syllables;
+			return syl.ToArray();
 		}
 		
 	}

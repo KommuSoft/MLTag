@@ -66,5 +66,6 @@
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.FastVectorHighlighter.dll" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Search.SimpleFacetedSearch.dll" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.dll" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </References>
 </Project>

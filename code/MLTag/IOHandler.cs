@@ -61,6 +61,8 @@ namespace MLTag {
 		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile testfile ?logfile"
 			FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
 			StringUtils.ReadConfigStream(fs);
+			Console.WriteLine(42.ToString("X2"));
+			Console.WriteLine(11.ToString("X2"));
 			fs.Close();
 			if(args.Length <= 1) {
 				Console.WriteLine("INVALID PROGRAM USAGE!! Program format: MLTag train test");
@@ -88,10 +90,23 @@ namespace MLTag {
 			#endregion
 			TextReader tr = Console.In;
 			line = tr.ReadLine();
+			string otherline;
 			while(line != null) {
-				foreach(string str in StringUtils.ToSyllables(line)) {
-					Console.Write("-{0}",str);
-				}
+				otherline = tr.ReadLine();
+				float rela, relb;
+				line = line.Replace(" ","-");
+				otherline = otherline.Replace(" ","-");
+				string[] sa = StringUtils.ToSyllables(line);
+				string[] sb = StringUtils.ToSyllables(otherline);
+				Console.WriteLine(string.Join("-",sa));
+				Console.WriteLine(string.Join("-",sb));
+				StringUtils.LevenshteinDistance(sa,sb,out rela);
+				StringUtils.LevenshteinDistance(line,otherline,out relb);
+				Console.WriteLine("{0}/{1}",Math.Sqrt(rela),relb);
+				line = tr.ReadLine();
+			}
+			line = tr.ReadLine();
+			while(line != null) {
 				foreach(Tuple<string,double> t in Query(line)) {
 					Console.WriteLine("{0}/{1}",t.Item1,t.Item2);
 				}
