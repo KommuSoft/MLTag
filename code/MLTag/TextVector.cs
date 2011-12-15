@@ -62,6 +62,8 @@ namespace MLTag {
 			tr.Close();*/
 			int ind, val;
 			foreach (String s in terms) {
+				if(s == string.Empty)
+					continue;
 				//s = normalisation.Replace(st,"");
 				if (!items.TryGetValue (s, out ind)) {
 					ind = items.Count;

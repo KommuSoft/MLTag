@@ -59,6 +59,9 @@ namespace MLTag {
 		}
 		
 		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile testfile ?logfile"
+			FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
+			StringUtils.ReadConfigStream(fs);
+			fs.Close();
 			if(args.Length <= 1) {
 				Console.WriteLine("INVALID PROGRAM USAGE!! Program format: MLTag train test");
 				return 0;
@@ -86,6 +89,9 @@ namespace MLTag {
 			TextReader tr = Console.In;
 			line = tr.ReadLine();
 			while(line != null) {
+				foreach(string str in StringUtils.ToSyllables(line)) {
+					Console.Write("-{0}",str);
+				}
 				foreach(Tuple<string,double> t in Query(line)) {
 					Console.WriteLine("{0}/{1}",t.Item1,t.Item2);
 				}
