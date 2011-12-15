@@ -83,7 +83,15 @@ namespace MLTag {
 				line = r.ReadLine();
 			}
 			#endregion
-			#region TestInner
+			TextReader tr = Console.In;
+			line = tr.ReadLine();
+			while(line != null) {
+				foreach(Tuple<string,double> t in Query(line)) {
+					Console.WriteLine("{0}/{1}",t.Item1,t.Item2);
+				}
+				line = tr.ReadLine();
+			}
+			/*#region TestInner
 			s.Position = 0;
 			line = r.ReadLine();
 			while(line != null) {
@@ -168,6 +176,7 @@ namespace MLTag {
 					}
 				}
 			}*/
+			return 0;
 		}
 
 	}

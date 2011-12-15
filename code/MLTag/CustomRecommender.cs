@@ -9,7 +9,7 @@ namespace MLTag {
 
 
 		private readonly Dictionary<TextVector, Tuple<IList<int>,double>> memory = new Dictionary<TextVector, Tuple<IList<int>,double>> ();
-		private AdditionalNeuralNetwork ann;
+		//private AdditionalNeuralNetwork ann;
 		private int not = 0;
 		//private const double threshold = 0.45d;
         
@@ -25,7 +25,7 @@ namespace MLTag {
 		public CustomRecommender (int numberOfTags) {
 			this.not = numberOfTags;
 			//Console.WriteLine(numberOfTags);
-			this.ann = new AdditionalNeuralNetwork(numberOfTags);
+			//this.ann = new AdditionalNeuralNetwork(numberOfTags);
 		}
 		
 		public void Train (string text, IList<int> tags) {
@@ -52,7 +52,7 @@ namespace MLTag {
 			}
 			//Console.WriteLine(string.Join(",",inp));
 			//Console.WriteLine(string.Join(",",outp));
-			ann.Learn(inp,outp);//*/
+			//ann.Learn(inp,outp);//*/
 		}
 
 		public double[] Tag (string text) {
@@ -88,8 +88,8 @@ namespace MLTag {
 		#region Recommender implementation
 		IEnumerable<double> Recommender.Tag (string text) {
 			double[] vals = this.Tag(text);
-			return ann.Activate(vals);
-			//return vals;
+			//return ann.Activate(vals);
+			return vals;
 		}
 		#endregion
 	}

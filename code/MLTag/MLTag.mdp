@@ -45,6 +45,8 @@
     <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.dll" />
     <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.FastVectorHighlighter.dll" />
     <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Search.SimpleFacetedSearch.dll" />
+    <File subtype="Code" buildaction="Nothing" name="bin/Debug/todos" />
+    <File subtype="Code" buildaction="Nothing" name="bin/Debug/todos2" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
