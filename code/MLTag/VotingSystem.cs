@@ -14,6 +14,7 @@ namespace MLTag {
 		private IOrderedEnumerable<Tag> tags;
 		private double threshold = 0.5d;
 		private int nbTags;
+		private bool train = true;
 
 		public int NumberOfTags {
 			get {
@@ -56,12 +57,14 @@ namespace MLTag {
 		}
 
 		public void Train (string text, IList<int> tags) {
+			this.train = true;
 			foreach (Recommender r in rcs) {
 				r.Train (text, tags);
 			}
 		}
 
 		public IEnumerable<double> Tag (string text) {
+			this.EndTrainingSession();
 			IEnumerable<double> total = new double[NumberOfTags];
 			foreach (Recommender r in rcs) {
 				IEnumerable<double > cur = r.Tag (text);
@@ -70,6 +73,16 @@ namespace MLTag {
 			total = total.Select ((x) => x /rcs.Count);
 
 			return total;
+		}
+		
+		public void EndTrainingSession () {
+			if(!this.train) {
+				return;
+			}
+			this.train = false;
+			foreach(Recommender r in this.rcs) {
+				r.EndTrainingSession();
+			}
 		}
 
 		public IEnumerable<Tuple<Tag,double>> TagFiltered (string text) {

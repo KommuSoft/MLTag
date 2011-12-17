@@ -151,6 +151,22 @@ namespace MLTag {
 			}
 			return cross / Math.Sqrt (na * nb);
 		}
+		public double[] ToDoubleArray () {
+			double[] vector = new double[items.Count];
+			foreach(KeyValuePair<int,int> kvp in this.counters) {
+				if(kvp.Key < items.Count) {
+					vector[kvp.Key] = kvp.Value;
+				}
+			}
+			return vector;
+		}
+		public static string[] GetAttributeNames () {
+			string[] names = new string[items.Count];
+			foreach(KeyValuePair<string,int> kvp in items) {
+				names[kvp.Value] = kvp.Key;
+			}
+			return names;
+		}
 		public static double operator ^ (TextVector a, TextVector b) {//cos-operator
 			return CosinusDistance (a, b);
 		}

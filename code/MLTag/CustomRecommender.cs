@@ -28,6 +28,8 @@ namespace MLTag {
 			//this.ann = new AdditionalNeuralNetwork(numberOfTags);
 		}
 		
+		public void EndTrainingSession () {}
+		
 		public void Train (string text, IList<int> tags) {
 			TextVector tv = new TextVector (text.ToLower());
 			double score = 1.0d;
@@ -45,14 +47,14 @@ namespace MLTag {
 				memory[item.Item1] = item.Item2;
 			}
 			memory.Add (tv,new Tuple<IList<int>,double>(tags,score));
-			double[] inp = this.Tag(text);
+			/*double[] inp = this.Tag(text);
 			double[] outp = new double[not];
 			foreach(int t in tags) {
 				outp[t] = 1.0d;
 			}
-			//Console.WriteLine(string.Join(",",inp));
-			//Console.WriteLine(string.Join(",",outp));
-			//ann.Learn(inp,outp);//*/
+			Console.WriteLine(string.Join(",",inp));
+			Console.WriteLine(string.Join(",",outp));
+			ann.Learn(inp,outp);//*/
 		}
 
 		public double[] Tag (string text) {

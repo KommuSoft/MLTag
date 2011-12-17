@@ -13,6 +13,8 @@ namespace MLTag {
 			set;
 		}
 
+		void EndTrainingSession ();
+		
 		void Train (String text, IList<int> tags);
 
 		/// <invar>return.Length == NumberOfTags</invar>

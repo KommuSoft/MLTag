@@ -10,7 +10,7 @@
       <Output directory="bin/Release" assembly="MLTag" />
       <Build debugmode="False" target="Exe" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
@@ -47,6 +47,14 @@
     <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Search.SimpleFacetedSearch.dll" />
     <File subtype="Code" buildaction="Nothing" name="bin/Debug/todos" />
     <File subtype="Code" buildaction="Nothing" name="bin/Debug/todos2" />
+    <File subtype="Code" buildaction="Compile" name="TextVector2.cs" />
+    <File subtype="Code" buildaction="Compile" name="NeuralNetworkRecommender.cs" />
+    <File subtype="Code" buildaction="Compile" name="MaximumQueue.cs" />
+    <File subtype="Code" buildaction="Compile" name="ID3Tree.cs" />
+    <File subtype="Code" buildaction="Compile" name="ID3TreeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="ID3TreeNodeLeaf.cs" />
+    <File subtype="Code" buildaction="Compile" name="ID3TreeNodeBranch.cs" />
+    <File subtype="Code" buildaction="Compile" name="ID3Recommender.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

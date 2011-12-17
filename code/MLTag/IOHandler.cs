@@ -59,7 +59,15 @@ namespace MLTag {
 		}
 		
 		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile testfile ?logfile"
-			FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
+			/*MaximumQueue<double> queue = new MaximumQueue<double>(3);
+			Random rand = new Random();
+			for(int i = 0; i < 200; i++) {
+				double ra = rand.NextDouble();
+				Console.WriteLine("Adding {0}",ra);
+				queue.Add(ra);
+				Console.WriteLine("Queue is now: {0}",queue);
+			}//*/
+			/*FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
 			StringUtils.ReadConfigStream(fs);
 			Console.WriteLine(42.ToString("X2"));
 			Console.WriteLine(11.ToString("X2"));
@@ -67,7 +75,7 @@ namespace MLTag {
 			if(args.Length <= 1) {
 				Console.WriteLine("INVALID PROGRAM USAGE!! Program format: MLTag train test");
 				return 0;
-			}
+			}*/
 			string[] tags = new string[]{"shop","sport","travel","home","reading","work","mlcourse","family","appointment","chore","urgent","school","finance","leisure","friends"};
 			metrics.Add(new TruePositivesMetric());
 			metrics.Add(new FalsePositivesMetric());
@@ -78,17 +86,63 @@ namespace MLTag {
 			metrics.Add(new AccuracyMetric());
 			metrics.Add(new HammingLossMetric(tags.Length));
 			vs = new VotingSystem (tags);
-			vs.AddRecommender (new CustomRecommender (tags.Length));
+			//vs.AddRecommender (new CustomRecommender (tags.Length));
+			vs.AddRecommender (new ID3Recommender ());
 			#region Training
 			Stream s = File.Open(args[0],FileMode.Open,FileAccess.Read);
 			TextReader r = new StreamReader(s);
 			string line = r.ReadLine();
+			TextReader tr = Console.In;
 			while(line != null) {
 				Query(line);
 				line = r.ReadLine();
 			}
 			#endregion
-			TextReader tr = Console.In;
+			/*while(line != null) {
+				Console.WriteLine(string.Join("-",StringUtils.ToSyllables(line)));
+				line = tr.ReadLine();
+			}*/
+			///*
+			/*List<string> words = new List<string>();
+			fs = File.Open("words",FileMode.Open,FileAccess.Read);
+			TextReader wr = new StreamReader(fs);
+			line = wr.ReadLine();
+			while(line != null) {
+				words.Add(line);
+				line = wr.ReadLine();
+			}
+			wr.Close();
+			fs.Close();
+			fs = File.Open("wordrel.txt",FileMode.Create,FileAccess.Write);
+			TextWriter tw = new StreamWriter(fs);
+			DateTime dt = DateTime.Now;
+			int l = 0;
+			for(int i = 0; i < words.Count; i++) {
+				for(int j = i+1; j < words.Count; j++) {
+					float rel = StringUtils.GetRelevance(words[i],words[j]);
+					l++;
+					if(rel >= 0.75f) {
+						tw.WriteLine("{0} <> {1}: {2}",words[i],words[j],rel);
+					}
+				}
+			}
+			tw.Close();
+			fs.Close();
+			DateTime other = DateTime.Now;
+			Console.WriteLine("Took {0} for {1} instances, that's {2} instances/second",other-dt,l,(float) l/(other-dt).TotalSeconds);
+			Console.ReadLine();
+			Console.WriteLine("-----------------------");
+			for(int i = 0; i < words.Count; i++) {
+				for(int j = i+1; j < words.Count; j++) {
+					float rel;
+					StringUtils.LevenshteinDistance(StringUtils.ToSyllables(words[i]),StringUtils.ToSyllables(words[j]),out rel);
+					rel *= rel;
+					if(rel > 0.4f) {
+						Console.WriteLine("{0} <> {1}: {2}",words[i],words[j],rel);
+					}
+				}
+			}//*/
+			/*
 			line = tr.ReadLine();
 			string otherline;
 			while(line != null) {
@@ -96,20 +150,17 @@ namespace MLTag {
 				float rela, relb;
 				line = line.Replace(" ","-");
 				otherline = otherline.Replace(" ","-");
-				string[] sa = StringUtils.ToSyllables(line);
-				string[] sb = StringUtils.ToSyllables(otherline);
-				Console.WriteLine(string.Join("-",sa));
-				Console.WriteLine(string.Join("-",sb));
-				StringUtils.LevenshteinDistance(sa,sb,out rela);
-				StringUtils.LevenshteinDistance(line,otherline,out relb);
-				Console.WriteLine("{0}/{1}",Math.Sqrt(rela),relb);
+				Console.WriteLine(string.Join("-",StringUtils.ToSyllables(line)));
+				Console.WriteLine(string.Join("-",StringUtils.ToSyllables(otherline)));
+				Console.WriteLine(StringUtils.GetRelevance(line,otherline));
 				line = tr.ReadLine();
-			}
+			}//*/
 			line = tr.ReadLine();
 			while(line != null) {
 				foreach(Tuple<string,double> t in Query(line)) {
 					Console.WriteLine("{0}/{1}",t.Item1,t.Item2);
 				}
+				Console.Write("> ");
 				line = tr.ReadLine();
 			}
 			/*#region TestInner
