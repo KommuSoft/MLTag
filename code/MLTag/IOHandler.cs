@@ -86,8 +86,8 @@ namespace MLTag {
 			metrics.Add(new AccuracyMetric());
 			metrics.Add(new HammingLossMetric(tags.Length));
 			vs = new VotingSystem (tags);
-			//vs.AddRecommender (new CustomRecommender (tags.Length));
-			vs.AddRecommender (new ID3Recommender ());
+			vs.AddRecommender (new CustomRecommender (tags.Length));
+			vs.AddRecommender (new ID3Recommender (0.6d));
 			#region Training
 			Stream s = File.Open(args[0],FileMode.Open,FileAccess.Read);
 			TextReader r = new StreamReader(s);
@@ -155,6 +155,7 @@ namespace MLTag {
 				Console.WriteLine(StringUtils.GetRelevance(line,otherline));
 				line = tr.ReadLine();
 			}//*/
+			/*
 			line = tr.ReadLine();
 			while(line != null) {
 				foreach(Tuple<string,double> t in Query(line)) {
@@ -162,8 +163,8 @@ namespace MLTag {
 				}
 				Console.Write("> ");
 				line = tr.ReadLine();
-			}
-			/*#region TestInner
+			}//*/
+			#region TestInner
 			s.Position = 0;
 			line = r.ReadLine();
 			while(line != null) {

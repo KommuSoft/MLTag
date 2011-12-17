@@ -9,6 +9,7 @@ namespace MLTag {
 		private ID3TreeNode[] roots;
 		private readonly List<Tuple<TextVector,bool[]>> memory = new List<Tuple<TextVector, bool[]>>();
 		private int not;
+		private double strong;
 		
 		public int NumberOfTags {
 			get {
@@ -17,6 +18,18 @@ namespace MLTag {
 			set {
 				this.not = value;
 			}
+		}
+		public double Strong {
+			get {
+				return this.strong;
+			}
+			set {
+				this.strong = value;
+			}
+		}
+		
+		public ID3Recommender (double strong) {
+			this.strong = strong;
 		}
 		
 		public void EndTrainingSession () {
@@ -44,7 +57,10 @@ namespace MLTag {
 			double[] ret = new double[not];
 			for(int i = 0; i < not; i++) {
 				if(roots[i].Evaluate(vector)) {
-					ret[i] = 1.0d;
+					ret[i] = strong;
+				}
+				else {
+					ret[i] = 1.0d-strong;
 				}
 			}
 			return ret;

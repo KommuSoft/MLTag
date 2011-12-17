@@ -55,6 +55,10 @@
     <File subtype="Code" buildaction="Compile" name="ID3TreeNodeLeaf.cs" />
     <File subtype="Code" buildaction="Compile" name="ID3TreeNodeBranch.cs" />
     <File subtype="Code" buildaction="Compile" name="ID3Recommender.cs" />
+    <File subtype="Directory" buildaction="Compile" name="data" />
+    <File subtype="Directory" buildaction="Compile" name="data" />
+    <File subtype="Code" buildaction="Nothing" name="data/trees.txt" />
+    <File subtype="Code" buildaction="Nothing" name="data/trees2.txt" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
