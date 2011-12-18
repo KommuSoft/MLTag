@@ -51,3 +51,4 @@ S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\tr-TR\AjaxCon
 S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\zh-CHS\AjaxControlToolkit.resources.dll
 S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\zh-CHT\AjaxControlToolkit.resources.dll
 S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\AForge.Neuro.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\Lucene.Net.dll
