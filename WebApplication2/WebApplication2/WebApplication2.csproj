@@ -171,6 +171,12 @@
     <None Include="todo\css\todos.scss" />
     <None Include="todo\README" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\code\MLTag\MLTag.csproj">
+      <Project>{3E4C129C-065A-445A-A844-37652AB56C2A}</Project>
+      <Name>MLTag</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

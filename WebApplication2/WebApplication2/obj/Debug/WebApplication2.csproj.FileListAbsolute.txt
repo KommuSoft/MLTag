@@ -23,3 +23,31 @@ C:\Users\Me\Documents\Visual Studio 2010\Projects\WebApplication2\WebApplication
 C:\Users\Me\Documents\Visual Studio 2010\Projects\WebApplication2\WebApplication2\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Me\Documents\Visual Studio 2010\Projects\WebApplication2\WebApplication2\obj\Debug\WebApplication2.dll
 C:\Users\Me\Documents\Visual Studio 2010\Projects\WebApplication2\WebApplication2\obj\Debug\WebApplication2.pdb
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\obj\Debug\ResolveAssemblyReference.cache
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\obj\Debug\WebApplication2.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\obj\Debug\WebApplication2.pdb
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\WebApplication2.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\WebApplication2.pdb
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\AjaxControlToolkit.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\AntiXSSLibrary.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\HtmlSanitizationLibrary.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\MLTag.exe
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\SanitizerProviders.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\MLTag.pdb
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\ar\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\cs\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\de\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\es\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\fr\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\he\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\hi\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\it\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\ja\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\ko\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\nl\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\pt\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\ru\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\tr-TR\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\zh-CHS\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\zh-CHT\AjaxControlToolkit.resources.dll
+S:\KUL4\machine learning\MLTag\WebApplication2\WebApplication2\bin\AForge.Neuro.dll

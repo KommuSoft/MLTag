@@ -43,7 +43,7 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
   <script>      !window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.6.1.min.js"%3E%3C/script%3E'))</script>
-  <script src="js/libs/sproutcore-2.0.beta.3.min.js"></script>
+  <script src="js/libs/sproutcore-2.0.beta.3.js"></script>
   <script src="js/app.js"></script>
   <asp:ToolkitScriptManager ID="ScriptManager1" runat="server"></asp:ToolkitScriptManager>
 
@@ -58,11 +58,10 @@
                 TargetControlID="tagOut"
                 ClearContentsDuringUpdate = "false"
                 ServiceMethod="Populate" 
-                ContextKey="No Todo Entered"
-                
+                ContextKey=""
                 />
                 <br /><br /><br />
-         <input  type="text" disabled="true" />       
+         <input  type="text" disabled="disabled" />       
          
     
 </asp:Content>

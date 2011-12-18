@@ -59,7 +59,7 @@ namespace MLTag {
 
 		public double[] Tag (string text) {
 			double[] result = new double[not];
-			TextVector tv = new TextVector (text.ToLower(),false);
+		    TextVector tv = new TextVector (text.ToLower(),false);
 			double total = 0.0d, score, temp;
 			Dictionary<int, double > tags = new Dictionary<int, double> ();
 			//Console.WriteLine("weights: ");
