@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Globalization;
+using Lucene.Net.Analysis.Snowball;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 
@@ -59,6 +60,9 @@ namespace MLTag {
 		}
 		
 		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile testfile ?logfile"
+			while(true) {
+				new BasicTextVector(Console.ReadLine());
+			}
 			/*MaximumQueue<double> queue = new MaximumQueue<double>(3);
 			Random rand = new Random();
 			for(int i = 0; i < 200; i++) {
