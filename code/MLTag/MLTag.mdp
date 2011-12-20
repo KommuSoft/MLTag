@@ -62,6 +62,8 @@
     <File subtype="Code" buildaction="Compile" name="NearestNeighbourRecommender.cs" />
     <File subtype="Code" buildaction="Compile" name="SymmetricFunctionCache.cs" />
     <File subtype="Code" buildaction="Nothing" name="bin/Debug/lang.dat" />
+    <File subtype="Code" buildaction="Compile" name="BasicTextVector.cs" />
+    <File subtype="Code" buildaction="Compile" name="PorterStemmerAlgorithm.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

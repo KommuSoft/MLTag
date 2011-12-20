@@ -59,9 +59,6 @@ namespace MLTag {
 		}
 		
 		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile testfile ?logfile"
-			while(true) {
-				Console.WriteLine(StringUtils.Compute(Console.ReadLine(),4));
-			}
 			/*MaximumQueue<double> queue = new MaximumQueue<double>(3);
 			Random rand = new Random();
 			for(int i = 0; i < 200; i++) {
