@@ -8,7 +8,7 @@ namespace MLTag {
 
 	public class TextVector2 {
 		
-		private static readonly Dictionary<string,int> terms = new Dictionary<string, int>();
+		private static readonly List<string> terms = new List<string>();
 		private double[] data;
 		private readonly string text;
 		
@@ -18,6 +18,9 @@ namespace MLTag {
 			}
 		}
 		
+		public static IEnumerable<string> GetTerms () {
+			return terms;
+		}
 		public TextVector2 (string line) : this(line,true) {}
 		public TextVector2 (string line, bool addTerms) {
 			this.text = line;
@@ -25,35 +28,43 @@ namespace MLTag {
 			StandardTokenizer t = new StandardTokenizer(tr);
 			Lucene.Net.Analysis.Token T = t.Next();
 			double[] data = new double[NumberOfTerms];
-			MaximumQueue<float> maximums = new MaximumQueue<float>(3);
 			while(T != null) {
 				bool candrop = false;
 				string st = T.TermText();
-				foreach(KeyValuePair<string,int> kvp in terms) {
-					float ratio = StringUtils.GetRelevance(kvp.Key,st);
-					maximums.Add(ratio);
+				int i = 0;
+				foreach(string term in terms) {
+					if(i >= data.Length) {
+						break;
+					}
+					float ratio = StringUtils.GetRelevance(term,st);
 					if(ratio == 1.0d) {
 						candrop = true;
 					}
-					data[kvp.Value] += ratio;
+					data[i++] += ratio;
 				}
-				if(!candrop && maximums.Average() < 0.75d) {
-					terms.Add(st,NumberOfTerms);
+				if(!candrop && addTerms) {
+					terms.Add(st);
 				}
 				T = t.Next();
-				maximums.Clear();
 			}
 			this.data = data;
 		}
 		
-		public double[] getDoubleArray () {
-			if(NumberOfTerms != data.Length) {
+		public double[] ToDoubleArray () {
+			if(NumberOfTerms != this.data.Length) {
 				double[] datb = new double[NumberOfTerms];
 				for(int i = 0; i < this.data.Length; i++) {
 					datb[i] = this.data[i];
 				}
-				for(int i = this.data.Length; i < NumberOfTerms; i++) {
-					datb[i] = 0.0d;//TODO: recalc other factors
+				TextReader tr = new StringReader(text);
+				StandardTokenizer t = new StandardTokenizer(tr);
+				Lucene.Net.Analysis.Token T = t.Next();
+				while(T != null) {
+					string st = T.TermText();
+					for(int i = this.data.Length; i < NumberOfTerms; i++) {
+						datb[i] += StringUtils.GetRelevance(terms[i],st);//TODO: recalc other factors
+					}
+					T = t.Next();
 				}
 				this.data = datb;
 			}

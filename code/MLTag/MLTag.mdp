@@ -3,7 +3,7 @@
     <Configuration name="Debug|x86" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="MLTag" />
       <Build debugmode="True" target="Exe" />
-      <Execution consolepause="True" externalconsole="True" commandlineparameters="todos2 todos log" runwithwarnings="True" runtime="MsNet" />
+      <Execution consolepause="True" externalconsole="True" commandlineparameters="todos2e todos2f log" runwithwarnings="True" runtime="MsNet" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release|x86" ctype="DotNetProjectConfiguration">
@@ -59,6 +59,9 @@
     <File subtype="Directory" buildaction="Compile" name="data" />
     <File subtype="Code" buildaction="Nothing" name="data/trees.txt" />
     <File subtype="Code" buildaction="Nothing" name="data/trees2.txt" />
+    <File subtype="Code" buildaction="Compile" name="NearestNeighbourRecommender.cs" />
+    <File subtype="Code" buildaction="Compile" name="SymmetricFunctionCache.cs" />
+    <File subtype="Code" buildaction="Nothing" name="bin/Debug/lang.dat" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -79,5 +82,6 @@
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Search.SimpleFacetedSearch.dll" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.dll" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/mulan.dll" />
   </References>
 </Project>

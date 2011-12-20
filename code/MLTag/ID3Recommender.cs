@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace MLTag {
+	
+	using TextMemory = TextVector2;
 
 	public class ID3Recommender : Recommender {
 		
 		private ID3TreeNode[] roots;
-		private readonly List<Tuple<TextVector,bool[]>> memory = new List<Tuple<TextVector, bool[]>>();
+		private readonly List<Tuple<TextMemory,bool[]>> memory = new List<Tuple<TextMemory, bool[]>>();
 		private int not;
 		private double strong;
 		
@@ -38,7 +40,8 @@ namespace MLTag {
 			Tuple<double[],bool>[] samples = new Tuple<double[], bool>[not];
 			ID3TreeNodeLeaf tl = new ID3TreeNodeLeaf(true);
 			ID3TreeNodeLeaf fl = new ID3TreeNodeLeaf(false);
-			string[] ats = TextVector.GetAttributeNames();
+			string[] ats = TextMemory.GetTerms().ToArray();
+			Console.WriteLine("start building trees");
 			for(int i = 0; i < not; i++) {
 				samples = memory.Zip(matrix,(x,y) => new Tuple<double[],bool>(y,x.Item2[i])).ToArray();
 				roots[i] = ID3Tree.FindBestBranch(samples,tl,fl);
@@ -46,14 +49,16 @@ namespace MLTag {
 			}
 		}
 		public void Train (string text, IList<int> tags) {
+			//Console.WriteLine("test");
 			bool[] tagb = new bool[not];
 			foreach(int i in tags) {
 				tagb[i] = true;
 			}
-			memory.Add(new Tuple<TextVector,bool[]>(new TextVector(text.ToLowerInvariant()),tagb));
+			memory.Add(new Tuple<TextMemory,bool[]>(new TextMemory(text.ToLowerInvariant()),tagb));
+			//Console.WriteLine("[ "+string.Join(" , ",memory[memory.Count-1].Item1.ToDoubleArray())+" ]");
 		}
 		public IEnumerable<double> Tag (string text) {
-			double[] vector = new TextVector(text.ToLowerInvariant(),false).ToDoubleArray();
+			double[] vector = new TextMemory(text.ToLowerInvariant(),false).ToDoubleArray();
 			double[] ret = new double[not];
 			for(int i = 0; i < not; i++) {
 				if(roots[i].Evaluate(vector)) {

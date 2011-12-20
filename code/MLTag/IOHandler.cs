@@ -59,6 +59,9 @@ namespace MLTag {
 		}
 		
 		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile testfile ?logfile"
+			while(true) {
+				Console.WriteLine(StringUtils.Compute(Console.ReadLine(),4));
+			}
 			/*MaximumQueue<double> queue = new MaximumQueue<double>(3);
 			Random rand = new Random();
 			for(int i = 0; i < 200; i++) {
@@ -67,15 +70,66 @@ namespace MLTag {
 				queue.Add(ra);
 				Console.WriteLine("Queue is now: {0}",queue);
 			}//*/
-			/*FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
+			FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
 			StringUtils.ReadConfigStream(fs);
-			Console.WriteLine(42.ToString("X2"));
-			Console.WriteLine(11.ToString("X2"));
 			fs.Close();
+			/*
+			fs = File.Open("todos2",FileMode.Open,FileAccess.Read);
+			TextReader tre = new StreamReader(fs);
+			string stri = tre.ReadLine();
+			List<string> lines = new List<string>();
+			while(stri != null) {
+				Match M = trainingRegex.Match(stri);
+				lines.Add(M.Groups[1].Value.ToLowerInvariant());
+				stri = tre.ReadLine();
+			}
+			tre.Close();
+			fs.Close();
+			double relMax;
+			double rel;
+			string striMax = string.Empty;
+			DateTime dt = DateTime.Now;
+			double[][] relTable = new double[lines.Count][];
+			for(int i = 0; i < lines.Count; i++) {
+				relMax = -1.0d;
+				relTable[i] = new double[lines.Count];
+				for(int j = 0; j < lines.Count; j++) {
+					rel = StringUtils.SentenceRelevance(lines[i],lines[j]);
+					if(rel > relMax) {
+						relMax = rel;
+						striMax = lines[j];
+					}
+					relTable[i][j] = rel;
+				}
+				//Console.WriteLine("MAX OF \"{0}\" IS \"{1}\" WITH {2}",lines[i],striMax,relMax);
+			}
+			DateTime dt2 = DateTime.Now;
+			Console.WriteLine((lines.Count*lines.Count/(dt2-dt).TotalSeconds)+" instances/second");
+			FileStream tab = new FileStream("raw.dat",FileMode.Create,FileAccess.Write);
+			TextWriter tabw = new StreamWriter(tab);
+			foreach(double[] data in relTable) {
+				tabw.WriteLine(string.Join("\t",data));
+				Array.Sort(data);
+			}
+			tabw.Close();
+			tab.Close();
+			tab = new FileStream("sorted.dat",FileMode.Create,FileAccess.Write);
+			tabw = new StreamWriter(tab);
+			for(int i = 0; i < lines.Count; i++) {
+				double avg = 0.0d;
+				for(int j = 0; j < lines.Count; j++) {
+					avg += relTable[j][i];
+					tabw.Write(relTable[j][i].ToString(NumberFormatInfo.InvariantInfo)+"\t");
+				}
+				tabw.Write((avg/lines.Count).ToString(NumberFormatInfo.InvariantInfo));
+				tabw.WriteLine();
+			}
+			tabw.Close();
+			tab.Close();*/
 			if(args.Length <= 1) {
 				Console.WriteLine("INVALID PROGRAM USAGE!! Program format: MLTag train test");
 				return 0;
-			}*/
+			}
 			string[] tags = new string[]{"shop","sport","travel","home","reading","work","mlcourse","family","appointment","chore","urgent","school","finance","leisure","friends"};
 			metrics.Add(new TruePositivesMetric());
 			metrics.Add(new FalsePositivesMetric());
@@ -86,17 +140,19 @@ namespace MLTag {
 			metrics.Add(new AccuracyMetric());
 			metrics.Add(new HammingLossMetric(tags.Length));
 			vs = new VotingSystem (tags);
-			vs.AddRecommender (new CustomRecommender (tags.Length));
-			vs.AddRecommender (new ID3Recommender (0.6d));
+			//vs.AddRecommender(new NeuralNetworkRecommender());
+			//vs.AddRecommender (new CustomRecommender (tags.Length));
+			//vs.AddRecommender (new ID3Recommender(0.7d));
+			vs.AddRecommender (new NearestNeighbourRecommender());
+			Console.WriteLine("train");
 			#region Training
 			Stream s = File.Open(args[0],FileMode.Open,FileAccess.Read);
 			TextReader r = new StreamReader(s);
 			string line = r.ReadLine();
-			TextReader tr = Console.In;
 			while(line != null) {
 				Query(line);
 				line = r.ReadLine();
-			}
+			}//*/
 			#endregion
 			/*while(line != null) {
 				Console.WriteLine(string.Join("-",StringUtils.ToSyllables(line)));
@@ -167,6 +223,7 @@ namespace MLTag {
 			#region TestInner
 			s.Position = 0;
 			line = r.ReadLine();
+			Console.WriteLine("Inner test");
 			while(line != null) {
 				Test(line);
 				line = r.ReadLine();
@@ -183,6 +240,7 @@ namespace MLTag {
 			s = File.Open(args[1],FileMode.Open,FileAccess.Read);
 			r = new StreamReader(s);
 			line = r.ReadLine();
+			Console.WriteLine("Outer test");
 			while(line != null) {
 				Test(line);
 				line = r.ReadLine();

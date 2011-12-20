@@ -15,8 +15,10 @@ namespace MLTag {
 		private static int totalCounter = 0;
 		private readonly Dictionary<int,int> counters;
 		private readonly string text;
-		private static RatioHandler ratio = (x => 1.0d-Math.Sqrt(x));//1-sqrt(x)
+		//private static RatioHandler ratio = (x => 1.0d-Math.Sqrt(x));//1-sqrt(x)
 		//private static RatioHandler ratio = (x => -x*Math.Log(x));//Entropy
+		//private static RatioHandler ratio = (x => 1.0d/x);
+		private static RatioHandler ratio = (x => 1.0d);
 		private static double tresholdRatio = 0.1d;
 		//private static Regex punctuation = new Regex(@"[!@#%^&*()+=-_<>,./?|\:;{}']+",RegexOptions.Compiled|RegexOptions.IgnoreCase);
 		//private static Regex normalisation = new Regex(@"ing|ed|s$",RegexOptions.Compiled);

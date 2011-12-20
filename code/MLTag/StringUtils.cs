@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Lucene.Net.Analysis.Standard;
+using System.Text;
 
 namespace MLTag {
 
@@ -16,7 +18,160 @@ namespace MLTag {
 		private const int RIGHT = 0;
 		private static readonly Dictionary<string,string[]> syllablesCache = new Dictionary<string, string[]>();
 		private const int CACHE_SIZE = 1024;
+		private static readonly SymmetricFunctionCache<string,float> sentenceTokenCache = new SymmetricFunctionCache<string, float>(GetRelevance);
 		
+		public static string[] GetTokens (string sentence) {
+			List<string> tokens = new List<string>();
+			TextReader tr = new StringReader(sentence);
+			StandardTokenizer t = new StandardTokenizer(tr);
+			Lucene.Net.Analysis.Token T = t.Next();
+			while(T != null) {
+				tokens.Add(T.TermText());
+				T = t.Next();
+			}
+			t.Close();
+			tr.Close();
+			return tokens.ToArray();
+		}
+		public static double SentenceRelevance (string a, string b) {
+			return SentenceRelevance(GetTokens(a),GetTokens(b));
+		}
+		public static double SentenceRelevance (string[] tokensa, string[] tokensb) {
+			double norma = 0.0d, normb = 0.0d, l, length = 0.0d;
+			string token;
+			float max;
+			for(int i = 0; i < tokensa.Length; i++) {
+				token = tokensa[i];
+				l = Math.Sqrt(token.Length);
+				length += l;
+				max = 0.0f;
+				for(int j = 0; j < tokensb.Length && max < 1.0d; j++) {
+					max = Math.Max(max,sentenceTokenCache[token,tokensb[j]]);
+				}
+				norma += max*l;
+			}
+			norma /= length;
+			length = 0.0d;
+			for(int i = 0; i < tokensb.Length; i++) {
+				token = tokensb[i];
+				l = Math.Sqrt(token.Length);
+				length += l;
+				max = 0.0f;
+				for(int j = 0; j < tokensa.Length && max < 1.0d; j++) {
+					max = Math.Max(max,sentenceTokenCache[token,tokensa[j]]);
+				}
+				normb += max*l;
+			}
+			normb /= length;
+			return 0.5d*(norma+normb);
+		}
+		public static string Compute (string word, int length) {
+			string value = string.Empty;
+			int size = word.Length;
+			if (size > 1) {
+				word = word.ToLowerInvariant();
+				char[] chars = word.ToCharArray();
+				StringBuilder buffer = new StringBuilder();
+				buffer.Length = 0;
+				int prevCode = 0;
+				int currCode = 0;
+				buffer.Append(chars[0]);
+				for (int i = 1; i < size; i++) {
+					switch (chars[i]) {
+						case 'a':
+						    currCode = 0;
+						    break;
+						case 'e':
+						    currCode = 0;
+						    break;
+						case 'i':
+						    currCode = 0;
+						    break;
+						case 'o':
+						    currCode = 0;
+						    break;
+						case 'u':
+						    currCode = 0;
+						    break;
+						case 'h':
+						    currCode = 0;
+						    break;
+						case 'w':
+						    currCode = 0;
+						    break;
+						case 'y':
+						    currCode = 0;
+						    break;
+						case 'b':
+						    currCode = 1;
+						    break;
+						case 'f':
+						    currCode = 1;
+						    break;
+						case 'p':
+						    currCode = 1;
+						    break;
+						case 'v':
+						    currCode = 1;
+						    break;
+						case 'c':
+						    currCode = 2;
+						    break;
+						case 'g':
+						    currCode = 2;
+						    break;
+						case 'j':
+						    currCode = 2;
+						    break;
+						case 'k':
+						    currCode = 2;
+						    break;
+						case 'q':
+						    currCode = 2;
+						    break;
+						case 's':
+						    currCode = 2;
+						    break;
+						case 'x':
+						    currCode = 2;
+						    break;
+						case 'z':
+						    currCode = 2;
+						    break;
+						case 'd':
+						    currCode = 3;
+						    break;
+						case 't':
+						    currCode = 3;
+						    break;
+						case 'l':
+						    currCode = 4;
+						    break;
+						case 'm':
+						    currCode = 5;
+						    break;
+						case 'n':
+						    currCode = 5;
+						    break;
+						case 'r':
+						    currCode = 6;
+						    break;
+					}
+					if(currCode != prevCode) {
+						if(currCode != 0)
+							buffer.Append(currCode);
+					}
+					prevCode = currCode;
+					if(buffer.Length == length)
+						break;
+					size = buffer.Length;
+					if (size < length)
+						buffer.Append('0', (length - size));
+					value = buffer.ToString();
+				}
+			}
+			return value;
+		}
 		public static int LevenshteinDistance (string a, string b, out float relevance) {
 			return LevenshteinDistance(a.ToCharArray(),b.ToCharArray(), out relevance);
 		}
@@ -179,7 +334,9 @@ namespace MLTag {
 		public static float GetRelevance (string worda, string wordb) {
 			worda = worda.ToLowerInvariant();
 			wordb = wordb.ToLowerInvariant();
-			float scora, scorb, scorc;
+			float scora;
+			float scorb;
+			float scorc;
 			string[] syla = ToSyllables(worda);
 			string[] sylb = ToSyllables(wordb);
 			LevenshteinDistance(syla,sylb,out scora);
@@ -188,6 +345,7 @@ namespace MLTag {
 			LevenshteinDistance(cha,chb,out scorb);
 			LongestCommonSubString(cha,chb,out scorc);
 			return (scora+scorb+scorc)/3.0f;
+			//return (scora+scorb)/2.0f;
 		}
 		public static string[] ToSyllables (string input) {
 			string[] result;

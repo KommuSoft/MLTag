@@ -30,6 +30,8 @@ namespace MLTag {
 			maxThreshold = double.NaN;
 			int subpos, subneg;
 			double gain;
+			//Console.WriteLine("random restart");
+			int s = 0;
 			for(int index = 0; index < m; index++) {
 				Array.Sort(examples,offset,length,new SubComparer(index));
 				subpos = 0; subneg = 0;
@@ -43,6 +45,9 @@ namespace MLTag {
 					if(examples[ithreshold+1].Item1[index]-examples[ithreshold].Item1[index] <= double.Epsilon) 
 						continue;
 					gain = -complexEntropy(pos,neg,subpos,subneg);
+					//Console.WriteLine(gain);
+					s++;
+					//s += string.Format("{0}/{1}/{2}/{3}\n",pos,neg,subpos,subneg);
 					if(gain > maxGain) {
 						maxGain = gain;
 						maxIndex = index;
@@ -50,7 +55,9 @@ namespace MLTag {
 					}
 				}
 			}
+			//Console.WriteLine(s);
 			if(maxIndex == -1) {
+				//Console.WriteLine("caused by: "+s);
 				maxIndex = 0;
 				maxThreshold = double.NaN;
 				if(pos > neg) {
@@ -72,10 +79,10 @@ namespace MLTag {
 				}
 			}
 			ID3TreeNode node1, node2;
-			if(subneg == devi) {
+			if(subneg == devi-offset) {
 				node1 = falseLeaf;
 			}
-			else if(subpos == devi) {
+			else if(subpos == devi-offset) {
 				node1 = trueLeaf;
 			}
 			else {
@@ -101,6 +108,9 @@ namespace MLTag {
 			return new ID3TreeNodeBranch(maxIndex,maxThreshold,node1,node2);
 		}
 		private static double entropy (int pos, int neg) {
+			if(pos == 0 || neg == 0) {
+				return 0.0d;
+			}
 			double ppos = (double) pos/(pos+neg);
 			double pneg = 1.0d-ppos;
 			return -ppos*Math.Log(ppos)-pneg*Math.Log(pneg);
