@@ -8,7 +8,6 @@ namespace MLTag {
 
 	public static class StringUtils {
 		
-		
 		private static readonly Dictionary<string,int[]> syllablesExceptions = new Dictionary<string, int[]>();
 		private static readonly Dictionary<string,string> startDictionary = new Dictionary<string, string>();
 		private static readonly Dictionary<string,string> stopDictionary = new Dictionary<string, string>();

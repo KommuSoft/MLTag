@@ -8,12 +8,18 @@ using weka.core;
 using java.util;
 using mulan.classifier;
 using weka.core.neighboursearch;
+using SF.Snowball.Ext;
+using Lucene.Net.Analysis.Snowball;
+using Lucene.Net.QueryParsers;
+using Lucene.Net.Analysis;
+using System.IO;
 
 namespace MLTag {
 
     public class MLkNNRecommender : Recommender {
         private Instances dataSet;
         private mulan.classifier.lazy.MLkNN cl;
+
 
         public MLkNNRecommender() {
             ArrayList nomi = new ArrayList();
@@ -91,6 +97,15 @@ namespace MLTag {
     }
 
     public class CurDistance : NormalizableDistance {
+        private TextWriter tw;
+        private TokenFilter filt;
+        MemoryStream ms;
+
+        public CurDistance() {
+            ms = new MemoryStream();
+            filt = new PorterStemFilter(new LowerCaseFilter(new WhitespaceTokenizer(new StreamReader(ms))));
+            tw = new StreamWriter(ms);
+        }
 
         public override string getRevision() {
             throw new NotImplementedException();
@@ -143,33 +158,69 @@ namespace MLTag {
             }
         }
 
+
+
         double stringDistance(String stringA, String stringB) {
-            int lengthA = stringA.Count();
-            int lengthB = stringB.Count();
-
-            double[][] distanceMatrix = new double[lengthA + 1][];
-
-            for (int i = 0; i <= lengthA; i++) {
-                distanceMatrix[i] = new double[lengthB + 1];
-                distanceMatrix[i][0] = i;
+            HashSet<string> ha = new HashSet<string>();
+            HashSet<string> hb = new HashSet<string>();
+            long pos = ms.Position;
+            tw.WriteLine(stringA);
+            tw.Flush();
+            ms.Position = pos;
+            Lucene.Net.Analysis.Token t = filt.Next();
+            while (t != null) {
+                ha.Add(t.TermText());
+                t = filt.Next();
             }
-
-            for (int j = 1; j <= lengthB; j++) {
-                distanceMatrix[0][j] = j;
+            pos = ms.Position;
+            tw.WriteLine(stringB);
+            tw.Flush();
+            ms.Position = pos;
+            Lucene.Net.Analysis.Token tb = filt.Next();
+            while (tb != null) {
+                hb.Add(tb.TermText());
+                tb = filt.Next();
             }
+            double uc = ha.Union(hb).Count();
+            double ic = ha.Intersect(hb).Count();
+            return (uc - ic) / uc;
+            /*int total = 0;
+            foreach (string sa in a) {
+                int min = int.MaxValue;
+                foreach (string sb in b) {
+                    min = Math.Min(min, LD(sa, sb));
+                }
+                total += min;
+            }
+            foreach (string sb in b) {
+                int min = int.MaxValue;
+                foreach (string sa in a) {
+                    min = Math.Min(min, LD(sa, sb));
+                }
+                total += min;
+            }
+            return total;*/
 
-            for (int i = 1; i <= lengthA; i++) {
-                for (int j = 1; j <= lengthB; j++) {
-                    if (stringA[i - 1] == stringB[j - 1]) {
-                        distanceMatrix[i][j] = distanceMatrix[i - 1][j - 1];
-                    } else {
-                        distanceMatrix[i][j] = 1 + Math.Min(distanceMatrix[i - 1][j],
-                                                            Math.Min(distanceMatrix[i][j - 1],
-                                                                     distanceMatrix[i - 1][j - 1]));
-                    }
+            //return LD(stringA, stringB);
+        }
+
+        public int LD(string s, string t) {
+            int n = s.Length; //length of s
+            int m = t.Length; //length of t
+            int[,] d = new int[n + 1, m + 1]; // matrix
+            int cost; // cost
+            if (n == 0) return m;
+            if (m == 0) return n;
+            for (int i = 0; i <= n; d[i, 0] = i++) ;
+            for (int j = 0; j <= m; d[0, j] = j++) ;
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= m; j++) {
+                    cost = (t.Substring(j - 1, 1) == s.Substring(i - 1, 1) ? 0 : 1);
+                    d[i, j] = System.Math.Min(System.Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                              d[i - 1, j - 1] + cost);
                 }
             }
-            return distanceMatrix[lengthA][lengthB];
+            return d[n, m];
         }
     }
 
