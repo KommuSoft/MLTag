@@ -1,0 +1,65 @@
+\documentclass[a4paper,titlepage]{article}
+\usepackage{fullpage}
+\usepackage[small,compact]{titlesec}
+\usepackage{enumitem}
+\usepackage[pdftex]{hyperref}
+\setitemize{topsep=1pt,parsep=0.5pt,partopsep=1pt}
+\title{Final project report:\\Machine Learning and Inductive Inference}
+\author{Ingmar Dasseville \& Willem Van Onsem}
+\date{December 23, 2011}
+\hypersetup{pdfborder={0 0 0 0}}
+\begin{document}
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+\tableofcontents
+\section{Questions addressed by this research}
+Most of the questions were already stated in the previous report together with the literature study. We will briefly repeat this questions together with additional questions found while experimenting.
+\begin{itemize}
+ \item What are the characteristics we can obtain from the to-dos in the training phase.
+ \item How to represent these characteristics.
+ \item What algorithms can be used to link these characteristics with affinity to certain tags.
+ \item What is the difference between multilabel classification and using multiple single label classifiers.
+ \item How to evaluate the system performance (quality of the predications).
+ \item ??
+\end{itemize}
+In the following subsections we will describe different approaches to solve these problems, and the result of our experiments with regards to these questions.
+\subsection{Characteristics}
+Basically there are two main approaches to obtain characteristics from text.
+\begin{itemize}
+ \item We use a distance metric that specifies what the difference is two to-dos.
+ \item We represent a to-do with an attribute-value vectors.
+\end{itemize}
+Notice the distance metric doesn't need to obtain real ``characteristics'' about the two to-dos as it can only look at some difference between them. However in most of the cases the distance metric will somehow use attribute-value vectors.
+\paragraph{}
+Most of the characteristics are based on publications \cite{codeproject2,codeproject1} by Thanh Dao and \cite{Malakasiotis:2007:LTE:1654536.1654547} by P. Malakasiotis. Some of the characteristics were developed first to later be confirmed by these two papers.
+\subsubsection{Levenshtein distance}
+A basic metric for string distance is the ``Levenshtein distance''. It represents the minimum number of additions, removals and modifies needed to transform one string into another. Experiments showed however that for this type of problem the Levenshtein distance is not suitable for the to-dos problem as most of the to-dos aren't full sentences and words can be permuted.
+\subsubsection{TeXHyphen}
+A theory we developed ourselves is that the way words are spoken contains also information about the word. Therefore we implemented the TeXHyphen algorithm\cite[p.376-406]{knuth1986tex} of Donald E. Knuth. The idea is to split the word intro syllables and perform the Levenshtein Distance on the syllables of two words. This measurement wasn't successful. Later we found out the Soundex algorithm is also widely used as a similarity measurement. Due to lack of time, we didn't experiment with Soundex.
+\subsubsection{Other similarity measurements}
+Other measurements that were studied were the $N$-gram distance and the maximum common substring.
+\subsubsection{Lucene.NET}
+Lucene.NET is a framework that is used for search engines. It allows to tokenize characterstreams and can do basic token filtering, categorization and even spelling checking. We used Lucene.NET to devide the to-dos intro a list of tokens and filter out irrelevant tokens like ``a'', ``the'' and ``will''. We also performed the ``Snowball English Stemming algorithm''\footnote{Also part of Lucene.NET} on those tokens, so that the meaning of those words became more clear. As a result we represented to-dos as a vector of stemmed words.
+\subsubsection{WordNet.NET}
+Another framework we used was WordNet.NET. WordNet is a lexical database. WordNet uses ``synsets'' as the unit of textual information. This is a data structure including the word, a specific meaning and its synonyms. WordNet contains a database that represents an ``is-a'' hierarchy in synsets. The similarity between two words is defined as the length of the path to go from one synset to another in the hierarchy. WordNet contains a hierarchy for every type of word: verb, noun, adverb,... Troy Simpson and Thanh Dao published \cite{codeproject1} where they give a method to measure the similarity between two sentences. WordNet also allows the user to walk through the hierarchies.
+\subsubsection{Cosine metric}
+\subsection{Evaluation metrics}
+To evaluate the performance of our systems we used the following metrics: True-Positives (TP), False-Positives (FP), True-Negatives (TN), False-Negatives (FN), Precision, Recall, F-Measure, Accuracy and Hamming Loss. These metrics are well documented in \cite{Francis99performancemeasures} and generally used in machine learning and information retrieval. We need to make two notes on these metrics:
+\begin{enumerate}
+ \item The to-dos testcases are sent by different people with each another way to tag items. So it's difficult to emulate a perfect tagging system.
+ \item The to-dos are evaluated by scores, we use the 50\% score as a hard line between tagging and not tagging. Therefore the metrics not always give a clear view.
+\end{enumerate}
+We also manually tested the systems with our own to-do list. To verify the system performance.
+\section{Experiments and results}
+\subsection{Evaluation of experiments}
+All experiments were done by deviding the to-dos testcase into two parts: a trainings part and a testing part. After training the system the system was tested with both the training and testing data. Resulting into two result report: ``inner results'' were the results based on testing the training output. In theory one could get a 100\% correct result. In most systems however we want to generalize the knowledge and avoid over fitting. The ``outer results'' are results based on the testing data, so unseen text. The outer test actually tests if the system can generalize it's knowledge.
+\section{Conclusions}
+\section{About the SproutCore framework}
+??[Ingmar]
+\section{Time and project management}
+??[Together]
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{bib}
+\end{document}

@@ -3,7 +3,7 @@
     <Configuration name="Debug|x86" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="MLTag" />
       <Build debugmode="True" target="Exe" />
-      <Execution consolepause="True" externalconsole="True" commandlineparameters="todos2e todos2f log" runwithwarnings="True" runtime="MsNet" />
+      <Execution consolepause="True" externalconsole="True" commandlineparameters="todos2 todos log" runwithwarnings="True" runtime="MsNet" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release|x86" ctype="DotNetProjectConfiguration">
@@ -50,11 +50,6 @@
     <File subtype="Code" buildaction="Compile" name="TextVector2.cs" />
     <File subtype="Code" buildaction="Compile" name="NeuralNetworkRecommender.cs" />
     <File subtype="Code" buildaction="Compile" name="MaximumQueue.cs" />
-    <File subtype="Code" buildaction="Compile" name="ID3Tree.cs" />
-    <File subtype="Code" buildaction="Compile" name="ID3TreeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="ID3TreeNodeLeaf.cs" />
-    <File subtype="Code" buildaction="Compile" name="ID3TreeNodeBranch.cs" />
-    <File subtype="Code" buildaction="Compile" name="ID3Recommender.cs" />
     <File subtype="Directory" buildaction="Compile" name="data" />
     <File subtype="Directory" buildaction="Compile" name="data" />
     <File subtype="Code" buildaction="Nothing" name="data/trees.txt" />
@@ -62,8 +57,12 @@
     <File subtype="Code" buildaction="Compile" name="NearestNeighbourRecommender.cs" />
     <File subtype="Code" buildaction="Compile" name="SymmetricFunctionCache.cs" />
     <File subtype="Code" buildaction="Nothing" name="bin/Debug/lang.dat" />
-    <File subtype="Code" buildaction="Compile" name="BasicTextVector.cs" />
+    <File subtype="Code" buildaction="Compile" name="AbstractBasicTextVector.cs" />
     <File subtype="Code" buildaction="Compile" name="PorterStemmerAlgorithm.cs" />
+    <File subtype="Code" buildaction="Compile" name="C45Recommender.cs" />
+    <File subtype="Code" buildaction="Compile" name="ConcreteBasicTextVector.cs" />
+    <File subtype="Code" buildaction="Compile" name="ISOLatin1AccentFilter.cs" />
+    <File subtype="Code" buildaction="Compile" name="FMeasureMetric.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -85,5 +84,37 @@
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.dll" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/mulan.dll" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/ICSharpCode.SharpZipLib.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.AWT.WinForms.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Beans.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Charsets.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Corba.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Core.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Jdbc.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Management.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Media.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Misc.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Naming.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Remoting.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Security.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.SwingAWT.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Text.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Tools.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.Util.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.XML.API.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.XML.Bind.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.XML.Crypto.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.XML.Parse.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.XML.Transform.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.XML.WebServices.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.OpenJDK.XML.XPath.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.Reflection.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.Runtime.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.Runtime.JNI.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/WordNetClasses.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/WordsMatching.dll" />
   </References>
 </Project>

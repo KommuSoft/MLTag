@@ -1,0 +1,21 @@
+<Combine fileversion="2.0">
+  <Policies>
+    <TextStylePolicy inheritsSet="null" scope="text/x-csharp" />
+    <CSharpFormattingPolicy NamespaceBraceStyle="EndOfLine" ClassBraceStyle="EndOfLine" InterfaceBraceStyle="EndOfLine" StructBraceStyle="EndOfLine" EnumBraceStyle="EndOfLine" MethodBraceStyle="EndOfLine" ConstructorBraceStyle="EndOfLine" DestructorBraceStyle="EndOfLine" BlankLinesBeforeFirstDeclaration="1" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
+    <StandardHeader Text="" IncludeInNewFiles="True" />
+  </Policies>
+  <Configurations active="Debug|x86">
+    <Configuration name="Debug|x86" ctype="CombineConfiguration">
+      <Entry build="True" name="MLTag" configuration="Debug|x86" />
+    </Configuration>
+    <Configuration name="Release|x86" ctype="CombineConfiguration">
+      <Entry build="True" name="MLTag" configuration="Release|x86" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="MLTag" single="True">
+    <Execute type="None" entry="MLTag" />
+  </StartMode>
+  <Entries>
+    <Entry filename="MLTag.mdp" />
+  </Entries>
+</Combine>

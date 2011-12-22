@@ -1,0 +1,283 @@
+--- !ruby/object:Gem::Specification 
+name: text-hyphen
+version: !ruby/object:Gem::Version 
+  hash: 11
+  prerelease: 
+  segments: 
+  - 1
+  - 2
+  version: "1.2"
+platform: ruby
+authors: 
+- Austin Ziegler
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2011-07-17 00:00:00 Z
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: rubyforge
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 7
+        segments: 
+        - 2
+        - 0
+        - 4
+        version: 2.0.4
+  type: :development
+  version_requirements: *id001
+- !ruby/object:Gem::Dependency 
+  name: hoe-doofus
+  prerelease: false
+  requirement: &id002 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ~>
+      - !ruby/object:Gem::Version 
+        hash: 15
+        segments: 
+        - 1
+        - 0
+        version: "1.0"
+  type: :development
+  version_requirements: *id002
+- !ruby/object:Gem::Dependency 
+  name: hoe-gemspec
+  prerelease: false
+  requirement: &id003 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ~>
+      - !ruby/object:Gem::Version 
+        hash: 15
+        segments: 
+        - 1
+        - 0
+        version: "1.0"
+  type: :development
+  version_requirements: *id003
+- !ruby/object:Gem::Dependency 
+  name: hoe-git
+  prerelease: false
+  requirement: &id004 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ~>
+      - !ruby/object:Gem::Version 
+        hash: 15
+        segments: 
+        - 1
+        - 0
+        version: "1.0"
+  type: :development
+  version_requirements: *id004
+- !ruby/object:Gem::Dependency 
+  name: hoe-seattlerb
+  prerelease: false
+  requirement: &id005 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ~>
+      - !ruby/object:Gem::Version 
+        hash: 15
+        segments: 
+        - 1
+        - 0
+        version: "1.0"
+  type: :development
+  version_requirements: *id005
+- !ruby/object:Gem::Dependency 
+  name: hoe
+  prerelease: false
+  requirement: &id006 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 35
+        segments: 
+        - 2
+        - 9
+        - 4
+        version: 2.9.4
+  type: :development
+  version_requirements: *id006
+description: |-
+  Text::Hyphen is a Ruby library to hyphenate words in various languages using
+  Ruby-fied versions of TeX hyphenation patterns. It will properly hyphenate
+  various words according to the rules of the language the word is written in.
+  The algorithm is based on that of the TeX typesetting system by Donald E.
+  Knuth.
+  
+  This is originally based on the Perl implementation of
+  {TeX::Hyphen}[http://search.cpan.org/author/JANPAZ/TeX-Hyphen-0.140/lib/TeX/Hyphen.pm]
+  and the {Ruby port}[http://rubyforge.org/projects/text-format]. The language
+  hyphenation pattern files are based on the sources available from
+  {CTAN}[http://www.ctan.org] as of 2004.12.19 and have been manually translated
+  by Austin Ziegler.
+  
+  This release is 1.2. This is a major release providing both Ruby 1.8.7 and Ruby
+  1.9.2 support. This is the last major release supporting Ruby 1.8 interpreters.
+  Future versions will only work with Ruby 1.9 or later interpreters.
+email: 
+- austin@rubyforge.org
+executables: 
+- ruby-hyphen
+extensions: []
+
+extra_rdoc_files: 
+- Manifest.txt
+- History.rdoc
+- License.rdoc
+- README.rdoc
+files: 
+- .autotest
+- History.rdoc
+- License.rdoc
+- Manifest.txt
+- README.rdoc
+- Rakefile
+- bin/ruby-hyphen
+- lib/text-hyphen.rb
+- lib/text/hyphen.rb
+- lib/text/hyphen/language.rb
+- lib/text/hyphen/language/1.8/ca.rb
+- lib/text/hyphen/language/1.8/cs.rb
+- lib/text/hyphen/language/1.8/da.rb
+- lib/text/hyphen/language/1.8/de1.rb
+- lib/text/hyphen/language/1.8/de2.rb
+- lib/text/hyphen/language/1.8/en_uk.rb
+- lib/text/hyphen/language/1.8/en_us.rb
+- lib/text/hyphen/language/1.8/es.rb
+- lib/text/hyphen/language/1.8/et.rb
+- lib/text/hyphen/language/1.8/eu.rb
+- lib/text/hyphen/language/1.8/fi.rb
+- lib/text/hyphen/language/1.8/fr.rb
+- lib/text/hyphen/language/1.8/ga.rb
+- lib/text/hyphen/language/1.8/hr.rb
+- lib/text/hyphen/language/1.8/hsb.rb
+- lib/text/hyphen/language/1.8/hu1.rb
+- lib/text/hyphen/language/1.8/hu2.rb
+- lib/text/hyphen/language/1.8/ia.rb
+- lib/text/hyphen/language/1.8/id.rb
+- lib/text/hyphen/language/1.8/is.rb
+- lib/text/hyphen/language/1.8/it.rb
+- lib/text/hyphen/language/1.8/la.rb
+- lib/text/hyphen/language/1.8/mn.rb
+- lib/text/hyphen/language/1.8/nl.rb
+- lib/text/hyphen/language/1.8/no1.rb
+- lib/text/hyphen/language/1.8/no2.rb
+- lib/text/hyphen/language/1.8/pl.rb
+- lib/text/hyphen/language/1.8/pt.rb
+- lib/text/hyphen/language/1.8/sv.rb
+- lib/text/hyphen/language/1.9/ca.rb
+- lib/text/hyphen/language/1.9/cs.rb
+- lib/text/hyphen/language/1.9/da.rb
+- lib/text/hyphen/language/1.9/de1.rb
+- lib/text/hyphen/language/1.9/de2.rb
+- lib/text/hyphen/language/1.9/en_uk.rb
+- lib/text/hyphen/language/1.9/en_us.rb
+- lib/text/hyphen/language/1.9/es.rb
+- lib/text/hyphen/language/1.9/et.rb
+- lib/text/hyphen/language/1.9/eu.rb
+- lib/text/hyphen/language/1.9/fi.rb
+- lib/text/hyphen/language/1.9/fr.rb
+- lib/text/hyphen/language/1.9/ga.rb
+- lib/text/hyphen/language/1.9/hr.rb
+- lib/text/hyphen/language/1.9/hsb.rb
+- lib/text/hyphen/language/1.9/hu1.rb
+- lib/text/hyphen/language/1.9/hu2.rb
+- lib/text/hyphen/language/1.9/ia.rb
+- lib/text/hyphen/language/1.9/id.rb
+- lib/text/hyphen/language/1.9/is.rb
+- lib/text/hyphen/language/1.9/it.rb
+- lib/text/hyphen/language/1.9/la.rb
+- lib/text/hyphen/language/1.9/mn.rb
+- lib/text/hyphen/language/1.9/nl.rb
+- lib/text/hyphen/language/1.9/no1.rb
+- lib/text/hyphen/language/1.9/no2.rb
+- lib/text/hyphen/language/1.9/pl.rb
+- lib/text/hyphen/language/1.9/pt.rb
+- lib/text/hyphen/language/1.9/sv.rb
+- lib/text/hyphen/language/ca.rb
+- lib/text/hyphen/language/cs.rb
+- lib/text/hyphen/language/da.rb
+- lib/text/hyphen/language/de.rb
+- lib/text/hyphen/language/de1.rb
+- lib/text/hyphen/language/de2.rb
+- lib/text/hyphen/language/en_uk.rb
+- lib/text/hyphen/language/en_us.rb
+- lib/text/hyphen/language/es.rb
+- lib/text/hyphen/language/et.rb
+- lib/text/hyphen/language/eu.rb
+- lib/text/hyphen/language/fi.rb
+- lib/text/hyphen/language/fr.rb
+- lib/text/hyphen/language/ga.rb
+- lib/text/hyphen/language/hr.rb
+- lib/text/hyphen/language/hsb.rb
+- lib/text/hyphen/language/hu.rb
+- lib/text/hyphen/language/hu1.rb
+- lib/text/hyphen/language/hu2.rb
+- lib/text/hyphen/language/ia.rb
+- lib/text/hyphen/language/id.rb
+- lib/text/hyphen/language/is.rb
+- lib/text/hyphen/language/it.rb
+- lib/text/hyphen/language/la.rb
+- lib/text/hyphen/language/mn.rb
+- lib/text/hyphen/language/ms.rb
+- lib/text/hyphen/language/nl.rb
+- lib/text/hyphen/language/no.rb
+- lib/text/hyphen/language/no1.rb
+- lib/text/hyphen/language/no2.rb
+- lib/text/hyphen/language/pl.rb
+- lib/text/hyphen/language/pt.rb
+- lib/text/hyphen/language/sv.rb
+- test/data/bug_9807_latin1.rb
+- test/data/bug_9807_utf-8.rb
+- test/test_bugs.rb
+- test/test_text_hyphen.rb
+- text-hyphen.gemspec
+- .gemtest
+homepage: 
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --main
+- README.rdoc
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: text-format
+rubygems_version: 1.8.5
+signing_key: 
+specification_version: 3
+summary: Text::Hyphen is a Ruby library to hyphenate words in various languages using Ruby-fied versions of TeX hyphenation patterns
+test_files: 
+- test/test_bugs.rb
+- test/test_text_hyphen.rb
