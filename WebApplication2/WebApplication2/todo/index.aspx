@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="WebApplication2.todo.WebForm1" MasterPageFile="~/Site.master" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="WebApplication2.todo.WebForm1" MasterPageFile="~/Site.Master" %>
 <%@ Register TagPrefix="asp" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit" %>
 
   <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">

@@ -63,6 +63,22 @@
     <File subtype="Code" buildaction="Compile" name="ConcreteBasicTextVector.cs" />
     <File subtype="Code" buildaction="Compile" name="ISOLatin1AccentFilter.cs" />
     <File subtype="Code" buildaction="Compile" name="FMeasureMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="MLKNN.cs" />
+    <File subtype="Code" buildaction="Compile" name="BasicTextVector.cs" />
+    <File subtype="Code" buildaction="Compile" name="Controller.cs" />
+    <File subtype="Code" buildaction="Compile" name="ID3Recommender.cs" />
+    <File subtype="Code" buildaction="Compile" name="ID3Tree.cs" />
+    <File subtype="Code" buildaction="Compile" name="ID3TreeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="ID3TreeNodeBranch.cs" />
+    <File subtype="Code" buildaction="Compile" name="ID3TreeNodeLeaf.cs" />
+    <File subtype="Code" buildaction="Nothing" name="MLTag.csproj" />
+    <File subtype="Code" buildaction="Nothing" name="MLTag.mdp" />
+    <File subtype="Code" buildaction="Nothing" name="MLTag.mds" />
+    <File subtype="Code" buildaction="Nothing" name="MLTag.pidb" />
+    <File subtype="Code" buildaction="Nothing" name="MLTag.userprefs" />
+    <File subtype="Code" buildaction="Compile" name="Tokeniser.cs" />
+    <File subtype="Code" buildaction="Compile" name="StringDistanceMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="StringDistanceMetricAttribute.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

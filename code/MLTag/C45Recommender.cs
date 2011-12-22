@@ -79,11 +79,11 @@ namespace MLTag {
 			datasets = derived;
 			classifiers = new AbstractClassifier[this.not];
 			for(int i = 0; i < this.not; i++) {
-				//classifiers[i] = new J48();
+				classifiers[i] = new J48();
 				//classifiers[i] = new DecisionStump();
 				//classifiers[i] = new LMT();
 				//classifiers[i] = new M5P();
-				classifiers[i] = new RandomForest();
+				//classifiers[i] = new RandomForest();
 				//classifiers[i] = new REPTree();
 				//classifiers[i].setUseMDLcorrection(false);
 				//classifiers[i].setSubtreeRaising(true);

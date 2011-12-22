@@ -9,7 +9,7 @@ using MLTag;
 namespace WebApplication2.todo {
     public partial class WebForm1 : System.Web.UI.Page {
         private static int c = 0;
-        private static Controller cont = new Controller("S:/todos");
+        private static Controller cont = new Controller("todos");
 
         protected void Page_Load(object sender, EventArgs e){
             //txtTodo.Attributes.Add("onChange", "$find('dpBeh').populate(this.value);");
