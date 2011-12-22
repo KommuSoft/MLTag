@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 
-namespace WebApplication2 {
+namespace WebTodoApp {
     public class Global : System.Web.HttpApplication {
 
         void Application_Start(object sender, EventArgs e) {

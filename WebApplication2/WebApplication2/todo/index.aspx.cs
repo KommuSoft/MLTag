@@ -6,10 +6,10 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using MLTag;
 
-namespace WebApplication2.todo {
-    public partial class WebForm1 : System.Web.UI.Page {
+namespace WebTodoApp.todo {
+    public partial class Index : System.Web.UI.Page {
         private static int c = 0;
-        private static Controller cont = new Controller("todos");
+        private static Controller cont = new Controller("S:/todos");
 
         protected void Page_Load(object sender, EventArgs e){
             //txtTodo.Attributes.Add("onChange", "$find('dpBeh').populate(this.value);");
