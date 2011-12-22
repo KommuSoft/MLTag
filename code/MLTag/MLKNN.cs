@@ -96,7 +96,7 @@ namespace MLTag {
         }
     }
 
-    public class CurDistance : NormalizableDistance {
+    public class CurDistance : BasicNormalizableDistance {
         private TextWriter tw;
         private TokenFilter filt;
         MemoryStream ms;
@@ -106,58 +106,6 @@ namespace MLTag {
             filt = new PorterStemFilter(new LowerCaseFilter(new WhitespaceTokenizer(new StreamReader(ms))));
             tw = new StreamWriter(ms);
         }
-
-        public override string getRevision() {
-            throw new NotImplementedException();
-        }
-
-        public override string globalInfo() {
-            throw new NotImplementedException();
-        }
-
-        protected override double updateDistance(double currDist, double diff) {
-            return (currDist + (diff * diff));
-        }
-
-        public override double distance(Instance first, Instance second, double cutOffValue, PerformanceStats stats) {
-            double sqDistance = 0;
-            int numAttributes = m_Data.numAttributes();
-
-            validate();
-
-            double diff;
-
-            for (int i = 0; i < numAttributes; i++) {
-                diff = 0;
-                if (m_ActiveIndices[i]) {
-                    diff = difference(i, first.stringValue(i), second.stringValue(i));
-                }
-                sqDistance = updateDistance(sqDistance, diff);
-                if (sqDistance > (cutOffValue * cutOffValue)) return Double.PositiveInfinity;
-            }
-            double distance = Math.Sqrt(sqDistance);
-            return distance;
-        }
-
-        protected double difference(int index, String string1, String string2) {
-            switch (m_Data.attribute(index).type()) {
-                case weka.core.Attribute.STRING:
-                    double diff = stringDistance(string1, string2);
-                    if (m_DontNormalize == true) {
-                        return diff;
-                    } else {
-                        if (string1.Count() > string2.Count()) {
-                            return diff / ((double)string1.Count());
-                        } else {
-                            return diff / ((double)string2.Count());
-                        }
-                    }
-
-                default:
-                    return 0;
-            }
-        }
-
 
 
         double stringDistance(String stringA, String stringB) {
@@ -184,43 +132,6 @@ namespace MLTag {
             double uc = ha.Union(hb).Count();
             double ic = ha.Intersect(hb).Count();
             return (uc - ic) / uc;
-            /*int total = 0;
-            foreach (string sa in a) {
-                int min = int.MaxValue;
-                foreach (string sb in b) {
-                    min = Math.Min(min, LD(sa, sb));
-                }
-                total += min;
-            }
-            foreach (string sb in b) {
-                int min = int.MaxValue;
-                foreach (string sa in a) {
-                    min = Math.Min(min, LD(sa, sb));
-                }
-                total += min;
-            }
-            return total;*/
-
-            //return LD(stringA, stringB);
-        }
-
-        public int LD(string s, string t) {
-            int n = s.Length; //length of s
-            int m = t.Length; //length of t
-            int[,] d = new int[n + 1, m + 1]; // matrix
-            int cost; // cost
-            if (n == 0) return m;
-            if (m == 0) return n;
-            for (int i = 0; i <= n; d[i, 0] = i++) ;
-            for (int j = 0; j <= m; d[0, j] = j++) ;
-            for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= m; j++) {
-                    cost = (t.Substring(j - 1, 1) == s.Substring(i - 1, 1) ? 0 : 1);
-                    d[i, j] = System.Math.Min(System.Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
-                              d[i - 1, j - 1] + cost);
-                }
-            }
-            return d[n, m];
         }
     }
 

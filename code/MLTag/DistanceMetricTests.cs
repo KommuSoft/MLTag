@@ -73,6 +73,21 @@ namespace MLTag {
 				}
 				tw.WriteLine();
 			}
+			for(int i1 = 0; i1 < 50; i1++) {
+				for(int i2 = 0; i2 < 50; i2++) {
+					for(int i3 = 0; i3 < 50; i3++) {
+						if(metric.GetDistance(lines[i1],lines[i2])+metric.GetDistance(lines[i2],lines[i3]) < metric.GetDistance(lines[i1],lines[i3])) {
+							Console.WriteLine("Error in driehoeksongelijkheid");
+							Console.WriteLine(lines[i1]);
+							Console.WriteLine(lines[i2]);
+							Console.WriteLine(lines[i3]);
+							Console.WriteLine(metric.GetDistance(lines[i1],lines[i2]));
+							Console.WriteLine(metric.GetDistance(lines[i1],lines[i3]));
+							Console.WriteLine(metric.GetDistance(lines[i2],lines[i3]));
+						}
+					}
+				}
+			}
 			/*List<KeyValuePair<Tuple<double,double>,int>> buff = new List<KeyValuePair<Tuple<double, double>, int>>();
 			foreach(KeyValuePair<Tuple<double,double>,int> kvp in mem) {
 				buff.Add(kvp);
