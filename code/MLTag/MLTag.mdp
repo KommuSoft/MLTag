@@ -79,6 +79,11 @@
     <File subtype="Code" buildaction="Compile" name="Tokeniser.cs" />
     <File subtype="Code" buildaction="Compile" name="StringDistanceMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="StringDistanceMetricAttribute.cs" />
+    <File subtype="Code" buildaction="Compile" name="LevenshteinDistance.cs" />
+    <File subtype="Code" buildaction="Compile" name="DistanceMetricTests.cs" />
+    <File subtype="Code" buildaction="Compile" name="LevenshteinWordDistance.cs" />
+    <File subtype="Code" buildaction="Compile" name="JacardDistance.cs" />
+    <File subtype="Code" buildaction="Compile" name="IngmarDistance.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -133,4 +138,5 @@
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/WordNetClasses.dll" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/WordsMatching.dll" />
   </References>
+  <LanguageParameters StartupObject="MLTag.DistanceMetricTests" ctype="CSharpProjectParameters" />
 </Project>

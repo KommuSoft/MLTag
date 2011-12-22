@@ -1,13 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="IOHandler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DistanceMetricTests.cs">
     <Files>
-      <File FileName="C45Recommender.cs" Line="86" Column="5" />
-      <File FileName="ConcreteBasicTextVector.cs" Line="97" Column="53" />
-      <File FileName="AbstractBasicTextVector.cs" Line="83" Column="4" />
-      <File FileName="StringUtils.cs" Line="1" Column="1" />
-      <File FileName="VotingSystem.cs" Line="1" Column="1" />
-      <File FileName="IOHandler.cs" Line="53" Column="4" />
+      <File FileName="StringDistanceMetric.cs" Line="7" Column="3" />
+      <File FileName="StringUtils.cs" Line="66" Column="6" />
+      <File FileName="LevenshteinDistance.cs" Line="2" Column="34" />
+      <File FileName="TextVector2.cs" Line="66" Column="25" />
+      <File FileName="NearestNeighbourRecommender.cs" Line="36" Column="16" />
+      <File FileName="DistanceMetricTests.cs" Line="4" Column="37" />
+      <File FileName="IOHandler.cs" Line="44" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -36,7 +36,8 @@ namespace MLTag {
 					if(i >= data.Length) {
 						break;
 					}
-					float ratio = StringUtils.GetRelevance(term,st);
+					float ratio = 1.0f;
+					//float ratio = StringUtils.GetRelevance(term,st);
 					if(ratio == 1.0d) {
 						candrop = true;
 					}
@@ -62,7 +63,7 @@ namespace MLTag {
 				while(T != null) {
 					string st = T.TermText();
 					for(int i = this.data.Length; i < NumberOfTerms; i++) {
-						datb[i] += StringUtils.GetRelevance(terms[i],st);//TODO: recalc other factors
+						datb[i] += 1.0d;//StringUtils.GetRelevance(terms[i],st);//TODO: recalc other factors
 					}
 					T = t.Next();
 				}

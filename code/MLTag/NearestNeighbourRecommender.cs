@@ -32,7 +32,8 @@ namespace MLTag {
 			double[] labels = new double[this.not];
 			double sum = 0.0d, rel;
 			for(int i = 0; i < distances.Length; i++) {
-				rel = StringUtils.SentenceRelevance(tokens,sampleTokens[i]);
+				//rel = StringUtils.SentenceRelevance(tokens,sampleTokens[i]);
+				rel = 1.0d;
 				distances[i] = rel;
 				sum += rel;
 			}

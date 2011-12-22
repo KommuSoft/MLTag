@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Lucene.Net.Analysis.Standard;
+using Lucene.Net.Analysis;
 using System.Text;
 
 namespace MLTag {
@@ -17,13 +17,28 @@ namespace MLTag {
 		private const int RIGHT = 0;
 		private static readonly Dictionary<string,string[]> syllablesCache = new Dictionary<string, string[]>();
 		private const int CACHE_SIZE = 1024;
-		private static readonly SymmetricFunctionCache<string,float> sentenceTokenCache = new SymmetricFunctionCache<string, float>(GetRelevance);
+		//private static readonly SymmetricFunctionCache<string,float> sentenceTokenCache = new SymmetricFunctionCache<string, float>(GetRelevance);
+		
+		public static IEnumerable<string> GetLuceneTokens (string text) {
+			TextReader tr = new StringReader(text);
+			TokenStream tok = new Lucene.Net.Analysis.Standard.StandardTokenizer(tr);
+			tok = new LowerCaseFilter(tok);
+			tok = new PorterStemFilter(tok);
+			//TokenStream tok = new WhitespaceTokenizer(tr);
+			//tok = new StopFilter(tok,StopAnalyzer.ENGLISH_STOP_WORDS);
+			Token t = tok.Next();
+			while(t != null) {
+				yield return t.TermText();
+				t = tok.Next();
+			}
+			tr.Close();
+		}
 		
 		public static string[] GetTokens (string sentence) {
 			List<string> tokens = new List<string>();
 			TextReader tr = new StringReader(sentence);
-			StandardTokenizer t = new StandardTokenizer(tr);
-			Lucene.Net.Analysis.Token T = t.Next();
+			Lucene.Net.Analysis.Standard.StandardTokenizer t = new Lucene.Net.Analysis.Standard.StandardTokenizer(tr);
+			Token T = t.Next();
 			while(T != null) {
 				tokens.Add(T.TermText());
 				T = t.Next();
@@ -32,7 +47,7 @@ namespace MLTag {
 			tr.Close();
 			return tokens.ToArray();
 		}
-		public static double SentenceRelevance (string a, string b) {
+		/*public static double SentenceRelevance (string a, string b) {
 			return SentenceRelevance(GetTokens(a),GetTokens(b));
 		}
 		public static double SentenceRelevance (string[] tokensa, string[] tokensb) {
@@ -63,10 +78,7 @@ namespace MLTag {
 			}
 			normb /= length;
 			return 0.5d*(norma+normb);
-		}
-		public static int LevenshteinDistance (string a, string b, out float relevance) {
-			return LevenshteinDistance(a.ToCharArray(),b.ToCharArray(), out relevance);
-		}
+		}*/
 		public static int LongestCommonSubString<T> (IList<T> a, IList<T> b, out float relevance) where T:IComparable<T> {
 			int m = a.Count;
 			int n = b.Count;
@@ -95,29 +107,6 @@ namespace MLTag {
 			//relevance = 2.0f*result/(m+n);
 			relevance = (float) (result*result)/(m*n);
 			return result;
-		}
-		public static int LevenshteinDistance<T> (IList<T> a, IList<T> b, out float relevance) where T:IComparable<T> {
-			int m = a.Count;
-			int n = b.Count;
-			int[,] grid = new int[m+1,n+1];
-			for(int i = 0; i <= m; i++) {
-				grid[i,0] = i;
-			}
-			for(int i = 0; i <= n; i++) {
-				grid[0,i] = i;
-			}
-			for(int j = 0; j < n; j++) {
-				for(int i = 0; i < m; i++) {
-					if(a[i].Equals(b[j])) {
-						grid[i+1,j+1] = grid[i,j];
-					}
-					else {
-						grid[i+1,j+1] = Math.Min(grid[i,j],Math.Min(grid[i+1,j],grid[i,j+1]))+1;
-					}
-				}
-			}
-			relevance = 1.0f-(float) grid[m,n]/Math.Max(m,n);
-			return grid[m,n];
 		}
 		public static void ReadConfigStream (Stream stream) {
 			//FileStream fs = File.Open("results.dat",FileMode.Create,FileAccess.Write);
@@ -223,7 +212,7 @@ namespace MLTag {
 			
 			return ints.ToArray();
 		}
-		public static float GetRelevance (string worda, string wordb) {
+		/*public static float GetRelevance (string worda, string wordb) {
 			worda = worda.ToLowerInvariant();
 			wordb = wordb.ToLowerInvariant();
 			float scora;
@@ -238,7 +227,7 @@ namespace MLTag {
 			LongestCommonSubString(cha,chb,out scorc);
 			return (scora+scorb+scorc)/3.0f;
 			//return (scora+scorb)/2.0f;
-		}
+		}*/
 		public static string[] ToSyllables (string input) {
 			string[] result;
 			input = input.ToLowerInvariant();
