@@ -61,13 +61,14 @@ namespace MLTag {
 		}
 		
 		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile+testfile ?logfile"
-			FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
+            args = new string[]{"S:\\todos"};
+			/*FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
 			StringUtils.ReadConfigStream(fs);
-			fs.Close();
-			if(args.Length <= 1) {
+			fs.Close();*/
+			/*if(args.Length <= 1) {
 				Console.WriteLine("INVALID PROGRAM USAGE!! Program format: MLTag train test");
 				return 0;
-			}
+			}*/
 			string[] tags = new string[]{"shop","sport","travel","home","reading","work","mlcourse","family","appointment","chore","urgent","school","finance","leisure","friends"};
 			metrics.Add(new TruePositivesMetric());
 			metrics.Add(new FalsePositivesMetric());
@@ -85,7 +86,8 @@ namespace MLTag {
 			//vs.AddRecommender (new ID3Recommender(0.7d));
 			//vs.AddRecommender (new NearestNeighbourRecommender());
 			
-			vs.AddRecommender(new C45Recommender(tags));
+			//vs.AddRecommender(new C45Recommender(tags));
+            vs.AddRecommender(new MLkNNRecommender(tags.Count()));
 			Console.WriteLine("train");
 			Stream s = File.Open(args[0],FileMode.Open,FileAccess.Read);
 			List<string> test = new List<string>(readLines(s));

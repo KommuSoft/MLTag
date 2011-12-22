@@ -15,7 +15,7 @@ namespace MLTag {
         public Controller(string learnPath) {
             //vs.AddRecommender(new CustomRecommender(15));
             //vs.AddRecommender(new ID3Recommender(0.6d));
-            vs.AddRecommender(new MLkNNRecommender());
+            vs.AddRecommender(new MLkNNRecommender(tags.Count()));
             Stream s = File.Open(learnPath, FileMode.Open, FileAccess.Read);
             TextReader r = new StreamReader(s);
             string line = r.ReadLine();

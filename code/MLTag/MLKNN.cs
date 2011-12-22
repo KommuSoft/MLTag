@@ -18,17 +18,18 @@ namespace MLTag {
 
     public class MLkNNRecommender : Recommender {
         private Instances dataSet;
-        private mulan.classifier.lazy.MLkNN cl;
+        private mulan.classifier.lazy.MultiLabelKNN cl;
 
 
-        public MLkNNRecommender() {
+        public MLkNNRecommender(int nbTags) {
+            tagsNb = nbTags;
             ArrayList nomi = new ArrayList();
             nomi.add("0");
             nomi.add("1");
             ArrayList attr = new ArrayList();
             weka.core.Attribute stringAttr = new weka.core.Attribute("todoString", (List)null);
             attr.add(stringAttr);
-            for (int i = 1; i <= 15; i++) {
+            for (int i = 1; i <= nbTags; i++) {
                 attr.add(new weka.core.Attribute("label" + i, nomi));
             }
             dataSet = new Instances("Todo-Instances", attr, 500);
@@ -45,7 +46,7 @@ namespace MLTag {
             return labelsData;
         }
 
-        private int tagsNb = 15;
+        private int tagsNb;
         public int NumberOfTags {
             get {
                 return tagsNb;
@@ -56,14 +57,15 @@ namespace MLTag {
         }
 
         public void EndTrainingSession() {
-            MultiLabelInstances mli = new MultiLabelInstances(dataSet, loadLabelsMeta(dataSet, 15));
+            MultiLabelInstances mli = new MultiLabelInstances(dataSet, loadLabelsMeta(dataSet, tagsNb));
             cl = new mulan.classifier.lazy.MLkNN();
-            cl.setDfunc(new CurDistance());
+            cl.setDfunc(new LevWord());
+//            cl.setDistanceWeighting(10000);
             cl.build(mli);
         }
 
         public void Train(string text, IList<int> tags) {
-            Instance ins = new DenseInstance(16);
+            Instance ins = new DenseInstance(tagsNb+1);
             ins.setDataset(dataSet);
             ins.setValue(0, text);
             for (int i = 0; i < tagsNb; i++) {
@@ -74,13 +76,12 @@ namespace MLTag {
                 }
 
             }
+            Console.WriteLine(ins);
             dataSet.add(ins);
-
-
         }
 
         public IEnumerable<double> Tag(string text) {
-            Instance ins = new DenseInstance(16);
+            Instance ins = new DenseInstance(tagsNb+1);
             ins.setDataset(dataSet);
             ins.setValue(0, text);
             MultiLabelOutput mlo = cl.makePrediction(ins);
@@ -96,19 +97,30 @@ namespace MLTag {
         }
     }
 
+    public class LevWord : BasicNormalizableDistance {
+
+        private StringDistanceMetric sdm = new LevenshteinWordDistance();
+        int c = 0;
+        public override double stringDistance(string stringA, string stringB) {
+            if (++c % 100 == 0) {
+                Console.WriteLine("\n-\n");
+            }
+            return sdm.GetDistance(stringA, stringB);
+        }
+    }
+
     public class CurDistance : BasicNormalizableDistance {
         private TextWriter tw;
         private TokenFilter filt;
-        MemoryStream ms;
+        private MemoryStream ms;
 
         public CurDistance() {
             ms = new MemoryStream();
             filt = new PorterStemFilter(new LowerCaseFilter(new WhitespaceTokenizer(new StreamReader(ms))));
             tw = new StreamWriter(ms);
         }
-
-
-        double stringDistance(String stringA, String stringB) {
+        
+        public override double stringDistance(String stringA, String stringB) {
             HashSet<string> ha = new HashSet<string>();
             HashSet<string> hb = new HashSet<string>();
             long pos = ms.Position;
