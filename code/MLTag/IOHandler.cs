@@ -13,10 +13,11 @@ namespace MLTag {
 
 	public class IOHandler {
 
-		private static readonly Regex trainingRegex = new Regex (@"^([^#]+)( +#([^# ]+))+ *$", RegexOptions.Compiled);
+		private static readonly Regex trainingRegex = new Regex (@"( +#([^# ]+))+ *$", RegexOptions.Compiled);
 		private static VotingSystem vs;
 		private static List<Metric> metrics = new List<Metric>();
-		private const int TRAIN_PERCENTAGE = 95;
+		private const int TRAIN_PERCENTAGE = 100;
+		//private static readonly HashSet<string> alltags = new HashSet<string>();
 		
 		public IOHandler () {
 		}
@@ -35,17 +36,18 @@ namespace MLTag {
 		}
 		public static List<String> ParseTags (string line, out string text) {
 			Match m = trainingRegex.Match (line);
-			text = m.Groups [1].Value;
+			text = line.Substring(0,line.Length-m.Groups[0].Value.Length);
 			List<String> tags = new List<String> ();
-			foreach (Capture c in m.Groups[3].Captures) {
-				tags.Add (c.Value);
+			foreach (Capture c in m.Groups[2].Captures) {
+				tags.Add(c.Value);
+				//alltags.Add(c.Value);
 			}
 			return tags;
 		}
 		public static IEnumerable<Tuple<string,double>> Query (string line) {
 			Match m = trainingRegex.Match (line);
 			if (m.Success) {//training data
-				Train (line);
+				Train(line);
 				return null;
 			} else {//query
 				return Recommend (line);
@@ -61,7 +63,7 @@ namespace MLTag {
 		}
 		
 		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile+testfile ?logfile"
-            args = new string[]{"S:\\todos"};
+            args = new string[]{"thesis.txt"};
 			/*FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
 			StringUtils.ReadConfigStream(fs);
 			fs.Close();*/
@@ -104,6 +106,8 @@ namespace MLTag {
 			foreach(string l in train) {
 				Query(l);
 			}
+			Console.ReadKey();
+			Console.WriteLine("{\"#"+string.Join("\", \"#",alltags)+"\"}");
 			vs.EndTrainingSession();
 			#endregion
 			#region TestInner
