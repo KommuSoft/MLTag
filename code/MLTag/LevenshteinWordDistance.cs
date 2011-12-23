@@ -10,9 +10,9 @@ namespace MLTag {
 		public LevenshteinWordDistance () {}
 		
 		public double GetDistance (string a, string b) {
-            DateTime n = DateTime.Now;
-			List<string> tokensa = new List<string>(StringUtils.GetLuceneTokens(a));
-			List<string> tokensb = new List<string>(StringUtils.GetLuceneTokens(b));
+			HashSet<string> tokensa = StringUtils.GetLuceneTokens(a);
+            HashSet<string> tokensb = StringUtils.GetLuceneTokens(b);
+            DateTime dt = DateTime.Now;
 			double sum = 0.0d;
 			foreach(string ta in tokensa) {
 				double min = double.PositiveInfinity;
@@ -28,8 +28,13 @@ namespace MLTag {
 				}
 				sum += min;
 			}
-            Console.WriteLine(n - DateTime.Now);
-			return sum/(tokensa.Count+tokensb.Count);
+            double ret = sum / (tokensa.Count + tokensb.Count);
+            if (Double.IsNaN(ret)) {
+                Console.WriteLine("WAAAAAAARNING");
+            }
+
+            Console.WriteLine(dt - DateTime.Now);
+            return ret ;
 		}
 		
 	}

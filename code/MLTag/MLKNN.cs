@@ -13,6 +13,7 @@ using Lucene.Net.Analysis.Snowball;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Analysis;
 using System.IO;
+using weka.filters.unsupervised.attribute;
 
 namespace MLTag {
 
@@ -58,6 +59,7 @@ namespace MLTag {
 
         public void EndTrainingSession() {
             MultiLabelInstances mli = new MultiLabelInstances(dataSet, loadLabelsMeta(dataSet, tagsNb));
+            Console.WriteLine("EndTraining");
             cl = new mulan.classifier.lazy.MLkNN();
             cl.setDfunc(new LevWord());
 //            cl.setDistanceWeighting(10000);
@@ -76,7 +78,7 @@ namespace MLTag {
                 }
 
             }
-            Console.WriteLine(ins);
+            Console.WriteLine("trainRestarted");
             dataSet.add(ins);
         }
 
@@ -99,11 +101,14 @@ namespace MLTag {
 
     public class LevWord : BasicNormalizableDistance {
 
-        private StringDistanceMetric sdm = new LevenshteinWordDistance();
+        private StringDistanceMetric sdm = new CosineMetric();
         int c = 0;
         public override double stringDistance(string stringA, string stringB) {
-            if (++c % 100 == 0) {
-                Console.WriteLine("\n-\n");
+            if (++c % 1000 == 0) {
+                Console.Write("-");
+                if (c % 10000 == 0) {
+                    Console.WriteLine();
+                }
             }
             return sdm.GetDistance(stringA, stringB);
         }

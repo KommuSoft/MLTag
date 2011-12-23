@@ -1,9 +1,11 @@
 using System;
 using weka.core;
+using weka.core.neighboursearch;
+using System.Linq;
 
 namespace MLTag {
 
-	public class BasicNormalizableDistance : NormalizableDistance {
+	public abstract class BasicNormalizableDistance : NormalizableDistance {
 
 		public BasicNormalizableDistance() {
 		}

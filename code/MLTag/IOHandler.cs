@@ -16,7 +16,7 @@ namespace MLTag {
 		private static readonly Regex trainingRegex = new Regex (@"( +#([^# ]+))+ *$", RegexOptions.Compiled);
 		private static VotingSystem vs;
 		private static List<Metric> metrics = new List<Metric>();
-		private const int TRAIN_PERCENTAGE = 100;
+		private const int TRAIN_PERCENTAGE = 95;
 		//private static readonly HashSet<string> alltags = new HashSet<string>();
 		
 		public IOHandler () {
@@ -63,7 +63,7 @@ namespace MLTag {
 		}
 		
 		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile+testfile ?logfile"
-            args = new string[]{"thesis.txt"};
+            args = new string[]{"S:\\todos"};
 			/*FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
 			StringUtils.ReadConfigStream(fs);
 			fs.Close();*/
@@ -89,7 +89,8 @@ namespace MLTag {
 			//vs.AddRecommender (new NearestNeighbourRecommender());
 			
 			//vs.AddRecommender(new C45Recommender(tags));
-            vs.AddRecommender(new MLkNNRecommender(tags.Count()));
+            //vs.AddRecommender(new MLkNNRecommender(tags.Count()));
+            vs.AddRecommender(new VectorClassif(tags.Count()));
 			Console.WriteLine("train");
 			Stream s = File.Open(args[0],FileMode.Open,FileAccess.Read);
 			List<string> test = new List<string>(readLines(s));
@@ -106,8 +107,6 @@ namespace MLTag {
 			foreach(string l in train) {
 				Query(l);
 			}
-			Console.ReadKey();
-			Console.WriteLine("{\"#"+string.Join("\", \"#",alltags)+"\"}");
 			vs.EndTrainingSession();
 			#endregion
 			#region TestInner
