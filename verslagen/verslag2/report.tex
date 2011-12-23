@@ -69,7 +69,8 @@ All experiments were done by dividing the to-dos testcase into two partitions: o
 \section{The Server}
 The webapplication communicates with an ASP.NET-server via AJAX. Every time a key is released in the input-box, the current contents of the textbox are send to the server and tags are suggested. For every suggested tag there is a checkbox which is checked by default. 
 
-When the todo is entered in the system, every checked textbox is added as a tag to the todo. The color of the text reflects the certainty the system assigns to the tag. The shade changes from red to green as the confidence increases.
+When the todo is entered in the system, every checked textbox is added as a tag to the todo. The color of the text reflects the certainty the system assigns to the tag. The shade changes from red to green as the confidence increases. Under these checkboxes the request number is noted. Every time a (partial) todo is sent to the server this number is increased by one. This number is sent by the server, so it can be used visually ensure that the server has sent his reply.
+\begin{figure} \centering \includegraphics[width=0.70\textwidth]{Screenshot.png} \caption{Our webapplication} \end{figure}
 Inside the server, we use a Voting System as master-classifier. On the first-access of the page the classifiers are initialised and then queried via AJAX as explained before. 
 \section{Conclusions}
 \section{About the SproutCore framework}

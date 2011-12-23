@@ -99,11 +99,12 @@ namespace MLTag {
             ins = stv.output();
             MultiLabelOutput mlo = lps.makePrediction(ins);
             List<double> outp = new List<Double>();
+            int i = 0;
             foreach (bool b in mlo.getBipartition()) {
                 if (b) {
-                    outp.Add(1);
+                    outp.Add(mlo.getConfidences()[i++]/2 + 0.5);
                 } else {
-                    outp.Add(0);
+                    outp.Add(0.5 - mlo.getConfidences()[i++]);
                 }
             }
             return outp;

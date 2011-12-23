@@ -203,56 +203,93 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractBasicTextVector.cs" />
-    <Compile Include="AccuracyMetric.cs" />
-    <Compile Include="AdditionalNeuralNetwork.cs" />
-    <Compile Include="BasicNormalizableDistance.cs" />
+    <Compile Include="AbstractBasicTextVector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AbstractMultipleSingleClassifierRecommender.cs" />
+    <Compile Include="AccuracyMetric.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AdditionalNeuralNetwork.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BasicNormalizableDistance.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="BasicTextVector.cs" />
-    <Compile Include="C45Recommender.cs" />
-    <Compile Include="ConcreteBasicTextVector.cs" />
-    <Compile Include="Controller.cs" />
-    <Compile Include="CosineMetric.cs" />
-    <Compile Include="CustomRecommender.cs" />
-    <Compile Include="DistanceMetricTests.cs" />
-    <Compile Include="FalseNegatives.cs" />
-    <Compile Include="FalsePositivesMetric.cs" />
-    <Compile Include="FMeasureMetric.cs" />
-    <Compile Include="HammingLossMetric.cs" />
-    <Compile Include="ID3Recommender.cs" />
-    <Compile Include="ID3Tree.cs" />
-    <Compile Include="ID3TreeNode.cs" />
-    <Compile Include="ID3TreeNodeBranch.cs" />
-    <Compile Include="ID3TreeNodeLeaf.cs" />
-    <Compile Include="IngmarDistance.cs" />
-    <Compile Include="IOHandler.cs" />
-    <Compile Include="ISOLatin1AccentFilter.cs" />
-    <Compile Include="JacardDistance.cs" />
-    <Compile Include="LevenshteinDistance.cs" />
-    <Compile Include="LevenshteinWordDistance.cs" />
-    <Compile Include="MaximumQueue.cs" />
-    <Compile Include="Metric.cs" />
-    <Compile Include="MLKNN.cs" />
-    <Compile Include="NearestNeighbourRecommender.cs" />
-    <Compile Include="NeuralNetworkRecommender.cs" />
-    <Compile Include="PorterStemmerAlgorithm.cs" />
-    <Compile Include="PrecisionMetric.cs" />
+    <Compile Include="ConcreteBasicTextVector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ConcreteMultipleSingleClassifierRecommender.cs" />
+    <Compile Include="Controller.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CosineDistanceMetric.cs" />
+    <Compile Include="DiceDistanceMetric.cs" />
+    <Compile Include="DistanceMetricTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EuclidDistanceMetric.cs" />
+    <Compile Include="EvaluationMetric.cs" />
+    <Compile Include="FalseNegativesMetric.cs" />
+    <Compile Include="FalsePositivesMetric.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FMeasureMetric.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HammingLossMetric.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IngmarDistance.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IOHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="JacardDistanceMetric.cs" />
+    <Compile Include="JaccardMetric.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LevenshteinDistanceMetric.cs" />
+    <Compile Include="LevenshteinWordDistanceMetric.cs" />
+    <Compile Include="MaximumQueue.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MLKNN.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PrecisionMetric.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RecallMetric.cs" />
-    <Compile Include="Recommender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringDistanceMetric.cs" />
-    <Compile Include="StringDistanceMetricAttribute.cs" />
-    <Compile Include="StringUtils.cs" />
-    <Compile Include="SymmetricFunctionCache.cs" />
-    <Compile Include="TextVector.cs" />
-    <Compile Include="TextVector2.cs" />
-    <Compile Include="Thesis.cs" />
-    <Compile Include="Tokeniser.cs" />
-    <Compile Include="TrueNegatives.cs" />
+    <Compile Include="RecallMetric.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Recommender.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StringDistanceMetric.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StringUtils.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TestRecommender.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Thesis.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tokeniser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TrueNegativesMetric.cs" />
     <Compile Include="TruePositivesMetric.cs" />
     <Compile Include="VectorClassif.cs" />
     <Compile Include="VotingSystem.cs" />

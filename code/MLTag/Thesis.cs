@@ -11,7 +11,7 @@ namespace MLTag {
 
         private static readonly Regex trainingRegex = new Regex(@"( +#([^# ]+))+ *$", RegexOptions.Compiled);
         private static VotingSystem vs;
-        private static List<Metric> metrics = new List<Metric>();
+        private static List<EvaluationMetric> metrics = new List<EvaluationMetric>();
         private const int TRAIN_PERCENTAGE = 95;
 
         public Thesis() {
@@ -52,7 +52,7 @@ namespace MLTag {
             string text;
             List<String> tags = ParseTags(line, out text);
             IEnumerable<String> result = vs.TagFiltered(text).Select(x => x.Item1);
-            foreach (Metric m in metrics) {
+            foreach (EvaluationMetric m in metrics) {
                 m.Process(tags, result);
             }
         }
@@ -102,7 +102,7 @@ namespace MLTag {
                 Test(l);
             }
             Console.WriteLine("Inner Results:");
-            foreach (Metric m in metrics) {
+            foreach (EvaluationMetric m in metrics) {
                 Console.WriteLine("\t{0} = {1}", m.Name, m.Result);
                 m.Reset();
             }
@@ -112,7 +112,7 @@ namespace MLTag {
                 Test(l);
             }
             Console.WriteLine("Outer Results:");
-            foreach (Metric m in metrics) {
+            foreach (EvaluationMetric m in metrics) {
                 Console.WriteLine("\t{0} = {1}", m.Name, m.Result);
             }
             #endregion

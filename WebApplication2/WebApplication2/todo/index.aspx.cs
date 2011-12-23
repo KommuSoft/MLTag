@@ -9,9 +9,18 @@ using MLTag;
 namespace WebTodoApp.todo {
     public partial class Index : System.Web.UI.Page {
         private static int c = 0;
-        private static Controller cont = new Controller("S:/todos");
+        private static Controller cont;
+        private static Exception ex;
 
         protected void Page_Load(object sender, EventArgs e){
+            if (cont == null) {
+                try {
+                    cont = new Controller("S:\\todos");
+                } catch (Exception exe) {
+                    ex = exe;
+                }
+            }
+            
             //txtTodo.Attributes.Add("onChange", "$find('dpBeh').populate(this.value);");
             //tagOut.Attributes.Add("onclick", "alert('boe')");
         }
@@ -26,6 +35,9 @@ namespace WebTodoApp.todo {
             }
             c++;
             string toRet = cont.Tag(contextKey).Count()+" suggestions:<br><br><br>";
+            if (ex != null) {
+                toRet += ex + "<br>";
+            }
             foreach(Tuple<string,double> tup in cont.Tag(contextKey)){
                 string g = ((int)Math.Round(tup.Item2 * 196)).ToString("x");
                 string r = ((int)Math.Round((1-tup.Item2) * 196)).ToString("x");
