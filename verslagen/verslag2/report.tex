@@ -65,10 +65,18 @@ We did a study on categorization criteria to find the most suitable methods. We 
 
 We strive to a plot where we see all the data is in the upper right triangle of the graph. That means that there are no to-dos who aren't related to another to-do, and have a low distance to each other. Having only a diagonal on the plot doesn't improve the quality of the metric as there can be several ``families'' that have the same affinity to the same tags, but are not related to each other. As we can see the cosine and dice metric perform quite well on this task. The word Levenshtein distance and the Jacard distance also has some correlation but also fills a large part of the lower left triangle.
 \subsection{Evaluation of experiments}
-All experiments were done by dividing the to-dos testcase into two partitions: one for training and one for testing. After training the system, the system was tested with both the training and testing data. Resulting into two result report: ``inner results'' were the results based on testing the training output. In theory one could get a 100\% correct result. In most systems however we want to generalize the knowledge and avoid overfitting. The ``outer results'' are results based on the testing data, that means the system has never seen these to-dos before. The outer test actually tests if the system can generalize it's knowledge.
+All experiments were done by dividing the to-dos testcase into two partitions: one for training and one for testing. After training the system, the system was tested with both the training and testing data. Resulting into two result report: ``inner results'' were the results based on testing the training output. In theory one could get a 100\% correct result by caching all data. In most systems however we want to generalize the knowledge and avoid overfitting. The ``outer results'' are results based on the testing data, that means the system has never seen these to-dos before. The outer test actually tests if the system can generalize it's knowledge.
+\section{The Server}
+The webapplication communicates with an ASP.NET-server via AJAX. Every time a key is released in the input-box, the current contents of the textbox are send to the server and tags are suggested. For every suggested tag there is a checkbox which is checked by default. 
+
+When the todo is entered in the system, every checked textbox is added as a tag to the todo. The color of the text reflects the certainty the system assigns to the tag. The shade changes from red to green as the confidence increases.
+Inside the server, we use a Voting System as master-classifier. On the first-access of the page the classifiers are initialised and then queried via AJAX as explained before. 
 \section{Conclusions}
 \section{About the SproutCore framework}
-??[Ingmar]
+Our experiences with the SproutCore framework are not very good. SproutCore looks like a good framework for the cases where no server is available, but when you try to couple it to a server everything becomes very complicated. We wanted to work in the .NET-framework so we imported the example project in a ASP.NET-server. ASP.NET is a typesafe language, so when you use an object as a target for by example Ajax-communication, he seeks for the corresponding id in the page. 
+
+The problem is that Sproutcore generates it's DOM dynamically so the ASP-code cannot be checked, so it won't compile. A few hacks, and even one little change in the SproutCore-framework sourcefile was necessary to get everything to work. In the end, it would be have been simpler to write everything from scratch. 
+
 \section{Time and project management}
 ??[Together]
 \nocite{*}
