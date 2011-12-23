@@ -90,10 +90,26 @@ To evaluate the performance of our systems we used the following metrics: True-P
 We also manually tested the systems with our own to-do list. To verify the system performance.
 
 \subsection{Mulan MLkNN}
-PLOTS
+As we can see on figure \ref{fig:mlknnr} the perfomance of MLkNN is not very consistent. There is an increasing trend for both precision and recall. The precision varies between 50 and 80\%. But the recall doesn't get higher then 20\%. A possible reason for this is that our distance metric works very well for some cases but very bad for others. A more extensive comparison of the bad and good-performing test-sets would be necessary to improve the performance.
+
+\begin{figure}
+\centering
+\subfigure[outer results]{\includegraphics[width=\textwidth]{MLkNNouter.pdf}}
+\subfigure[inner results]{\includegraphics[width=\textwidth]{MLkNNinner.pdf}}
+\caption{Results of the MLkNN.}
+\label{fig:br}
+\end{figure}
 
 \subsection{Mulan BR with NaiveBayes}
-PLOTS
+As  we can see on figure \ref{fig:br} the performance of the BR algorithm is much more consistent than the MLkNN algorithm. The precision of the algorithm rises quickly as the testcases raises to 20\% of the size. And the recall keeps increasing as the number of testcases grows. In the end, both the precision and recall are about 55\%. This performance is far warse then MLkNN but as the recall is a lot better, the netto result is in favor of BR. We can see in the outer results that the dataset is very good at fitting small sets, this could be a sign of overfitting. Investigating how to counter this behavior would be the next step for increasing the performance in this metric.
+
+\begin{figure}
+\centering
+\subfigure[outer results]{\includegraphics[width=\textwidth]{vectorClassifinner.pdf}}
+\subfigure[inner results]{\includegraphics[width=\textwidth]{vectorClassifouter.pdf}}
+\caption{Results of the Mulan BR with NaiveBayes.}
+\label{fig:br}
+\end{figure}
 
 \subsection{ConcreteCustomVectorRecommender (J48 with our own vectorization)}
 As we can see on figure \ref{fig:ccvrresults} the algorithm gives good inner results with a precision of 95\% and a recall, accuracy and F-measure of 60\%. These data converge also fast - around 20\% - and have very few outliers and a low variance. The hamming loss - about 7\% - also indicates that few of the models are in fact overgeneralizing the training data. The outer results are as often lower. The precision reaches about 80\% but recall accuracy and F-measure remain on 40\%. This indicates that the system in most cases will only apply a tag on the todo if it is quite sure. A problem that we have encountered many times with decision trees and classifiers in common. However finding a way to make the system more ``brave'' is not that trivial. Using ``fake'' training data could be a solution however experiments shown that that a higher recall is bought off by a much lower precision. The system converges at about 30\% and remains consistent until about 95\% meaning even on individual cases there are most of the times no real surprises. The range of each of the metrics is about 10\%, meaning of course that the algorithm is somewhat sensible to differences in the trainingset.
