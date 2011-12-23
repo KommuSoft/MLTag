@@ -54,9 +54,21 @@ Another framework we experimented with was WordNet.NET. WordNet is a lexical dat
 \subsection{Votingsystem}
 We use a votingsystem as base for the tag system. With the votingsystem we are able to develop different approaches and test them independently, but combine them for a more accurate result. The votingsystem also is able to optimize certain operations. An important point of attention however is that all the taggers in the voting system, have the same interpretation of a value: all taggers return a number between 0 and 1
 but a certain value must have the same level of certainty to all the taggers. Furthermore Weka supports a lot of binary classifiers who in most of the cases return only 0 or 1. This values give some taggers of the voting system a way to force their results through the voting system. Therefore these results are modified to 0.25 and 0.75.
-\subsection{Mulan-$k$-Nearest Neighbours}
+\subsection{Classifiers via Mulan}
+
+We ported the open-source java library Mulan\footnote{Mulan: A Java Library for Multi-Label Learning: \url{http://mulan.sourceforge.net/}} to C\# via IKVM\footnote{\url{http://www.ikvm.net/}}. Mulan is built on top op Weka with the purpose to extend Weka with possibilities for multi-label learning.
+As in most literature there is a distinction between methods created specifically for multi-label learning and methods that convert the multi-label problem to multiple single-label problems.
+After many experiments we decided to include two classifiers into our final program.
+The first one we consider is the MLkNN algorithm. The second one Binary Relevance with an internal Naive Bayes.
+
+\subsubsection{Mulan MLkNN}
 \label{ss:mlknn}
-\subsection{VectorClassif}
+MLkNN\footnote{Multi-Label k-Nearest Neighbours} is a natural extension to the k-Nearest Neighbours algorithm, known from single-label classification. Instead of just comparing the single class attributes from the unknown example to it's neighbours, it does this with all class tags.
+As this algorithm uses the neighbours of a todo, we needed a distance metric to decide how we define ``closeness''.  as seen in \ref{ss:distanceStudy}. We ultimately decided to go with the cosine-metric, based on both taging-performance and runtime-performance.
+
+\subsubsection{Mulan BR with NaiveBayes}
+The other Recommender that is included in the final version of the project first transforms one problem with $n$ classes to $n$ problems with one class and then solves these individual, simpler problems with NaiveBayes. As NaiveBayes doesn't include support for String-attributes, the StringToWordVector-filter is applied to all instances (both training and test-data) before entering them in the classifiers. This filter includes converting lowercase and stemming.
+
 \label{ss:sovectorclassif}
 \subsection{ConcreteCustomVectorRecommender (J48 with our own vectorization)}
 \label{ss:j48alg}
@@ -75,20 +87,12 @@ To evaluate the performance of our systems we used the following metrics: True-P
  \item The to-dos are evaluated by scores, we use the 50\% score as a hard line between tagging and not tagging. Therefore the metrics not always give a clear view.
 \end{enumerate}
 We also manually tested the systems with our own to-do list. To verify the system performance.
-\subsection{Classifiers via Mulan}
 
+\subsection{Mulan MLkNN}
+PLOTS
 
-We ported the open-source java library Mulan\footnote{Mulan: A Java Library for Multi-Label Learning: \url{http://mulan.sourceforge.net/}} to C\# via IKVM\footnote{\url{http://www.ikvm.net/}}. Mulan is built on top op Weka with the purpose to extend Weka with possibilities for multi-label learning.
-As in most literature there is a distinction between methods created specifically for multi-label learning and methods that convert the multi-label problem to multiple single-label problems.
-After many experiments we decided to include two classifiers into our final program.
-The first one we consider is the MLkNN algorithm. The second one Binary Relevance with an internal Naive Bayes.
-
-\subsubsection{Mulan MLkNN}
-MLkNN\footnote{Multi-Label k-Nearest Neighbours} is a natural extension to the k-Nearest Neighbours algorithm, known from single-label classification. Instead of just comparing the single class attributes from the unknown example to it's neighbours, it does this with all class tags.
-As this algorithm uses the neighbours of a todo, we needed a distance metric to decide how we define ``closeness''.  as seen in \ref{ss:distanceStudy}. We ultimately decided to go with the cosine-metric, based on both taging-performance and runtime-performance.
-
-\subsubsection{Mulan BR with NaiveBayes}
-The other Recommender that is included in the final version of the project first transforms one problem with $n$ classes to $n$ problems with one class and then solves these individual, simpler problems with NaiveBayes. As NaiveBayes doesn't include support for String-attributes, the StringToWordVector-filter is applied to all instances (both training and test-data) before entering them in the classifiers. This filter includes converting lowercase and stemming.
+\subsection{Mulan BR with NaiveBayes}
+PLOTS
 
 \subsection{ConcreteCustomVectorRecommender (J48 with our own vectorization)}
 As we can see on figure \ref{fig:ccvrresults} the algorithm gives good inner results with a precision of 95\% and a recall, accuracy and F-measure of 60\%. These data converge also fast - around 20\% - and have very few outliers and a low variance. The hamming loss - about 7\% - also indicates that few of the models are in fact overgeneralizing the training data. The outer results are as often lower. The precision reaches about 80\% but recall accuracy and F-measure remain on 40\%. This indicates that the system in most cases will only apply a tag on the todo if it is quite sure. A problem that we have encountered many times with decision trees and classifiers in common. However finding a way to make the system more ``brave'' is not that trivial. Using ``fake'' training data could be a solution however experiments shown that that a higher recall is bought off by a much lower precision. The system converges at about 30\% and remains consistent until about 95\% meaning even on individual cases there are most of the times no real surprises. The range of each of the metrics is about 10\%, meaning of course that the algorithm is somewhat sensible to differences in the trainingset.
