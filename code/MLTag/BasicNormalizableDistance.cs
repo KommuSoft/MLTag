@@ -2,6 +2,8 @@ using System;
 using weka.core;
 using weka.core.neighboursearch;
 using System.Linq;
+using weka.core.neighboursearch;
+using System.Linq;
 
 namespace MLTag {
 

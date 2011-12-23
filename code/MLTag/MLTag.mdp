@@ -64,7 +64,6 @@
     <File subtype="Code" buildaction="Compile" name="ISOLatin1AccentFilter.cs" />
     <File subtype="Code" buildaction="Compile" name="FMeasureMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="MLKNN.cs" />
-    <File subtype="Code" buildaction="Compile" name="BasicTextVector.cs" />
     <File subtype="Code" buildaction="Compile" name="Controller.cs" />
     <File subtype="Code" buildaction="Compile" name="ID3Recommender.cs" />
     <File subtype="Code" buildaction="Compile" name="ID3Tree.cs" />
@@ -83,8 +82,12 @@
     <File subtype="Code" buildaction="Compile" name="DistanceMetricTests.cs" />
     <File subtype="Code" buildaction="Compile" name="LevenshteinWordDistance.cs" />
     <File subtype="Code" buildaction="Compile" name="JacardDistance.cs" />
-    <File subtype="Code" buildaction="Compile" name="IngmarDistance.cs" />
     <File subtype="Code" buildaction="Compile" name="BasicNormalizableDistance.cs" />
+    <File subtype="Code" buildaction="Compile" name="CosineMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="DiceMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="JaccardMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="EuclidDistance.cs" />
+    <File subtype="Code" buildaction="Compile" name="TestRecommender.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -139,5 +142,5 @@
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/WordNetClasses.dll" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/WordsMatching.dll" />
   </References>
-  <LanguageParameters StartupObject="MLTag.DistanceMetricTests" ctype="CSharpProjectParameters" />
+  <LanguageParameters StartupObject="MLTag.IOHandler" ctype="CSharpProjectParameters" />
 </Project>

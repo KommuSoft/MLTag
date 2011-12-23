@@ -13,7 +13,6 @@ namespace MLTag {
 		
 		public F this [X x1, X x2] {
 			get {
-				//Console.WriteLine("{0}/{1}",x1,x2);
 				int x1i, x2i;
 				if(!this.dict1.TryGetValue(x1,out x1i)) {
 					return cacheValue(x1,x2);
@@ -29,7 +28,6 @@ namespace MLTag {
 					val = ((long) x2i<<0x20)|x1i;
 				}
 				F result;
-				//Console.WriteLine("boe");
 				if(!this.dict2.TryGetValue(val,out result)) {
 					return cacheValue(x1,x2,val);
 				}
@@ -44,7 +42,6 @@ namespace MLTag {
 		private F cacheValue (X x1, X x2) {
 			int i = dict1.Count;
 			this.dict1.Add(x1,i);
-			//Console.WriteLine("{0} obtai|1|ned {1}",x1,i);
 			int x2i;
 			if(!this.dict1.TryGetValue(x2,out x2i)) {
 				return cacheValue(x1,x2,i);
@@ -57,12 +54,10 @@ namespace MLTag {
 		private F cacheValue (X x1, X x2, int x1i) {
 			int i = dict1.Count;
 			this.dict1.Add(x2,i);
-			//Console.WriteLine("{0} obtai|2|ned {1}",x2,i);
 			long val = ((long) x1i<<0x20)|i;
 			return cacheValue(x1,x2,val);
 		}
 		private F cacheValue (X x1, X x2, long val) {
-			//Console.WriteLine(val);
 			F result = function(x1,x2);
 			this.dict2.Add(val,result);
 			return result;

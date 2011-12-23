@@ -63,7 +63,7 @@ namespace MLTag {
 		}
 		
 		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile+testfile ?logfile"
-            args = new string[]{"S:\\todos"};
+            args = new string[]{"todos"};
 			/*FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
 			StringUtils.ReadConfigStream(fs);
 			fs.Close();*/
@@ -91,6 +91,7 @@ namespace MLTag {
 			//vs.AddRecommender(new C45Recommender(tags));
             //vs.AddRecommender(new MLkNNRecommender(tags.Count()));
             vs.AddRecommender(new VectorClassif(tags.Count()));
+			//vs.AddRecommender(new C45Recommender());
 			Console.WriteLine("train");
 			Stream s = File.Open(args[0],FileMode.Open,FileAccess.Read);
 			List<string> test = new List<string>(readLines(s));

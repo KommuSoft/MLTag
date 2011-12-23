@@ -12,10 +12,11 @@ namespace MLTag {
 
 	public class ConcreteBasicTextVector : AbstractBasicTextVector {
 		
-		private static readonly Regex timeRegex = new Regex(@"^(0?[0-9]|1[0-9]|2[0-4])(h|u)|(0?[0-9]|1[0-2])(am|pm)$",RegexOptions.Compiled|RegexOptions.IgnoreCase|RegexOptions.CultureInvariant);
-		private static readonly Regex yearRegex = new Regex(@"^[0-9][0-9][0-9][0-9](-[0-9][0-9][0-9][0-9])?$",RegexOptions.Compiled|RegexOptions.IgnoreCase|RegexOptions.CultureInvariant);
+		private static readonly Regex timeRegex = new Regex(@"^(((0?[0-9]|1[0-9]|2[0-4])(h|u))|((0?[0-9]|1[0-9])(am|pm)([0-5][0-9])?))$");
+		private static readonly Regex yearRegex = new Regex(@"^[0-9]{4}(-[0-9]{4})?$",RegexOptions.Compiled|RegexOptions.IgnoreCase|RegexOptions.CultureInvariant);
 		private static readonly Regex numberRegex = new Regex(@"^[0-9]+?$",RegexOptions.Compiled|RegexOptions.IgnoreCase|RegexOptions.CultureInvariant);
 		private static readonly Dictionary<string,string> conversions = new Dictionary<string, string>();
+		private static readonly Dictionary<string,string> classifications = new Dictionary<string, string>();
 		private static readonly PartsOfSpeech[] POSEnum = (PartsOfSpeech[]) Enum.GetValues(typeof(PartsOfSpeech));
 		private static bool dataDetectorsInstalled = false;
 		
@@ -33,8 +34,16 @@ namespace MLTag {
 			DateTimeFormatInfo dtfi = DateTimeFormatInfo.InvariantInfo;
 			addConversions(new string[][] {dtfi.AbbreviatedDayNames},dtfi.DayNames);
 			addConversions(new string[][] {dtfi.AbbreviatedMonthGenitiveNames,dtfi.AbbreviatedMonthNames,dtfi.MonthGenitiveNames},dtfi.MonthNames);
+			addClassifications(dtfi.DayNames,"#Day");
+			addClassifications(dtfi.MonthNames,"#Month");
 		}
-		
+		private void addClassifications (IEnumerable<string> frms, string addit) {
+			foreach(string frm in frms) {
+				if(!classifications.ContainsKey(frm)) {
+					classifications.Add(frm.ToLowerInvariant(),addit);
+				}
+			}
+		}
 		private void addConversions (IEnumerable<IEnumerable<string>> frms, IEnumerable<string> tos) {
 			List<IEnumerator<string>> items = new List<IEnumerator<string>>(frms.Select(x => x.GetEnumerator()));
 			foreach(string to in tos) {
@@ -50,22 +59,16 @@ namespace MLTag {
 			return Math.Max(a,b);
 		}
 		
-		public override IEnumerable<Tuple<string,double>> GetTerms (System.IO.TextReader tr) {
-			TokenStream tok = new Lucene.Net.Analysis.Standard.StandardTokenizer(tr);
-			tok = new ISOLatin1AccentFilter(tok);
-			tok = new StopFilter(tok,StopAnalyzer.ENGLISH_STOP_WORDS);
-			Token t = tok.Next();
-			EnglishStemmer stemmer = new EnglishStemmer();
-			string v, org, tmp;
-			while(t != null) {
-				v = t.TermText();
-				org = v;
-				if(v != null && v != string.Empty) {
-					if(conversions.TryGetValue(v.ToLowerInvariant(),out tmp)) {
-						v = tmp;
-					}
-					else {
-						stemmer.SetCurrent(v);
+		public override IEnumerable<Tuple<string,double>> GetTerms (string text) {
+			string token;
+			foreach(string v in StringUtils.GetLuceneTokens(text)) {
+				token = v;
+				if(token != null && token != string.Empty) {
+					//if(conversions.TryGetValue(v.ToLowerInvariant(),out tmp)) {	
+						//v = tmp;
+					//}
+					//else {
+						/*stemmer.SetCurrent(v);
 						stemmer.Stem();
 						v = stemmer.GetCurrent();
 						if(timeRegex.IsMatch(v)) {
@@ -86,9 +89,32 @@ namespace MLTag {
 							//Console.WriteLine("{0}/{1} < {2}",t.Type(),v,org);
 						}
 					}
-					if(v != string.Empty) {
-						yield return new Tuple<string, double>(v.ToLowerInvariant(),2.0d);
-						for(int i = 1; i < POSEnum.Length; i++) {
+					if(v != string.Empty) {*/
+					string tmp;
+					if(conversions.TryGetValue(token,out tmp)) {
+						Console.WriteLine("CONVERTED {0} to {1}",token,tmp);
+						token = tmp;
+					}
+					yield return new Tuple<string, double>(token,1.0d);
+					string clas;
+					if(classifications.TryGetValue(token,out clas)) {
+						Console.WriteLine("CLASSIFIED {0} as {1}",token,clas);
+						yield return new Tuple<string, double>(clas,1.0d);
+					}
+					if(timeRegex.IsMatch(token)) {
+						Console.WriteLine("{0} IS TIME",token);
+						yield return new Tuple<string, double>("#Time",1.0d);
+					}
+					if(yearRegex.IsMatch(token)) {
+						//Console.WriteLine("{0} IS YEAR",token);
+						yield return new Tuple<string, double>("#Year",1.0d);
+					}
+					if(numberRegex.IsMatch(token)) {
+						//Console.WriteLine("{0} IS NUMBER",token);
+						yield return new Tuple<string, double>("#Number",1.0d);
+					}
+					
+						/*for(int i = 1; i < POSEnum.Length; i++) {
 							HierarchicalWordData hwd = new HierarchicalWordData(new MyWordInfo(org,POSEnum[i]));
 							foreach(System.Collections.DictionaryEntry de in hwd.Distance) {
 								string key = "#WD"+de.Key.ToString();
@@ -98,9 +124,9 @@ namespace MLTag {
 							}
 							//Console.ReadKey();
 						}
-					}
+					}*/
 				}
-				t = tok.Next();
+				//t = tok.Next();
 			}
 		}
 		

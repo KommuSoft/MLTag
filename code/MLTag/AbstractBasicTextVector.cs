@@ -26,11 +26,10 @@ namespace MLTag {
 		
 		protected AbstractBasicTextVector (string text) : this(text,true) {}
 		protected AbstractBasicTextVector (string text, bool addTerms) {
-			TextReader tr = new StringReader(text);
 			int idx;
 			double score, s;
 			string v;
-			foreach(Tuple<string,double> vs in GetTerms(tr)) {
+			foreach(Tuple<string,double> vs in GetTerms(text)) {
 				v = vs.Item1;
 				s = vs.Item2;
 				if(!terms.TryGetValue(v,out idx)) {
@@ -48,10 +47,9 @@ namespace MLTag {
 					vector[idx] = AddingMethod(vector[idx],s);
 				}
 			}
-			tr.Close();
 		}
 		
-		public abstract IEnumerable<Tuple<string,double>> GetTerms (TextReader tr);
+		public abstract IEnumerable<Tuple<string,double>> GetTerms (string text);
 		public virtual double AddingMethod (double a, double b) {
 			return a+b;
 		}
@@ -59,7 +57,7 @@ namespace MLTag {
 		public static void WriteInstancesArff (TextWriter tw, IEnumerable<AbstractBasicTextVector> vectors, string relation, IEnumerable<string> classifiers, IEnumerable<IEnumerable<bool>> result) {
 			tw.WriteLine("@relation '{0}'",relation);
 			foreach(string att in Attributes) {
-				tw.WriteLine("@attribute '{0}' real",att);
+				tw.WriteLine("@attribute '{0}' {1}",att,"{0,1}");
 			}
 			foreach(string cla in classifiers) {
 				tw.WriteLine("@attribute 'tag+{0}' {1}",cla,"{0,1}");

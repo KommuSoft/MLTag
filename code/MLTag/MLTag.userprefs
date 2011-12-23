@@ -1,14 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DistanceMetricTests.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="IOHandler.cs">
     <Files>
-      <File FileName="StringDistanceMetric.cs" Line="7" Column="3" />
-      <File FileName="StringUtils.cs" Line="66" Column="6" />
-      <File FileName="LevenshteinDistance.cs" Line="2" Column="34" />
-      <File FileName="TextVector2.cs" Line="66" Column="25" />
-      <File FileName="NearestNeighbourRecommender.cs" Line="36" Column="16" />
-      <File FileName="DistanceMetricTests.cs" Line="4" Column="37" />
-      <File FileName="IOHandler.cs" Line="44" Column="4" />
+      <File FileName="DistanceMetricTests.cs" Line="112" Column="25" />
+      <File FileName="LevenshteinWordDistance.cs" Line="6" Column="10" />
+      <File FileName="CosineMetric.cs" Line="6" Column="10" />
+      <File FileName="DiceMetric.cs" Line="18" Column="3" />
+      <File FileName="JaccardMetric.cs" Line="6" Column="28" />
+      <File FileName="EuclidDistance.cs" Line="6" Column="29" />
+      <File FileName="StringUtils.cs" Line="18" Column="106" />
+      <File FileName="IOHandler.cs" Line="55" Column="26" />
+      <File FileName="TestRecommender.cs" Line="19" Column="41" />
+      <File FileName="MLKNN.cs" Line="122" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
