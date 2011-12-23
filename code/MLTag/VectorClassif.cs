@@ -13,6 +13,7 @@ using mulan.classifier.neural;
 using weka.filters;
 using weka.classifiers.bayes;
 using weka.classifiers.trees;
+using mulan.classifier.meta;
 
 namespace MLTag {
     class VectorClassif : Recommender {
@@ -56,7 +57,7 @@ namespace MLTag {
             }
         }
 
-        private BinaryRelevance lps;
+        private RAkEL lps;
         public void EndTrainingSession() {
             Console.WriteLine("End"); 
             stv = new StringToWordVector();
@@ -68,8 +69,9 @@ namespace MLTag {
             stv.setIDFTransform(true);
             dataSet = Filter.useFilter(oDataSet, stv);
             MultiLabelInstances mli = new MultiLabelInstances(dataSet, loadLabelsMeta(dataSet, tagsNb));
-            
-            lps = new mulan.classifier.transformation.BinaryRelevance(new NaiveBayes());
+            BinaryRelevance br = new mulan.classifier.transformation.BinaryRelevance(new NaiveBayes());
+            lps = new mulan.classifier.meta.RAkEL(br);
+            br.setDebug(true);
             lps.setDebug(true);
             lps.build(mli);
 
@@ -104,7 +106,7 @@ namespace MLTag {
                 if (b) {
                     outp.Add(mlo.getConfidences()[i++]/2 + 0.5);
                 } else {
-                    outp.Add(0.5 - mlo.getConfidences()[i++]);
+                    outp.Add(0.5 - mlo.getConfidences()[i++]/2);
                 }
             }
             return outp;

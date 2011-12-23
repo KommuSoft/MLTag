@@ -6,17 +6,16 @@ using System.Text.RegularExpressions;
 using System.IO;
 
 namespace MLTag {
-	
     public class Controller {
 
         private static readonly string[] tags = new string[]{"shop","sport","travel","home","reading","work","mlcourse","family","appointment","chore","urgent","school","finance","leisure","friends"};
         private static readonly Regex trainingRegex = new Regex(@"^([^#]+)( +#([^# ]+))+ *$", RegexOptions.Compiled);
         private VotingSystem vs = new VotingSystem(tags);
-
+        
         public Controller(string learnPath) {
-            //vs.AddRecommender(new CustomRecommender(15));
-            //vs.AddRecommender(new ID3Recommender(0.6d));
-            vs.AddRecommender(new MLkNNRecommender(tags.Count()));
+            vs.AddRecommender(new VectorClassif(tags.Count()));
+            //vs.AddRecommender(new ConcreteCustomVectorRecommender(tags));
+            //vs.AddRecommender(new MLkNNRecommender(tags.Count()));
             Stream s = File.Open(learnPath, FileMode.Open, FileAccess.Read);
             TextReader r = new StreamReader(s);
             string line = r.ReadLine();
@@ -24,6 +23,7 @@ namespace MLTag {
                 Train(line);
                 line = r.ReadLine();
             }
+            s.Close();
             vs.EndTrainingSession();
         }
 

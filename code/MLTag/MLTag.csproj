@@ -206,7 +206,7 @@
     <Compile Include="AbstractBasicTextVector.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AbstractMultipleSingleClassifierRecommender.cs" />
+    <Compile Include="AbstractCustomVectorRecommender.cs" />
     <Compile Include="AccuracyMetric.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -220,7 +220,7 @@
     <Compile Include="ConcreteBasicTextVector.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ConcreteMultipleSingleClassifierRecommender.cs" />
+    <Compile Include="ConcreteCustomVectorRecommender.cs" />
     <Compile Include="Controller.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -253,9 +253,6 @@
     </Compile>
     <Compile Include="LevenshteinDistanceMetric.cs" />
     <Compile Include="LevenshteinWordDistanceMetric.cs" />
-    <Compile Include="MaximumQueue.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MLKNN.cs">
       <SubType>Code</SubType>
     </Compile>

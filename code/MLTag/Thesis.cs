@@ -48,6 +48,7 @@ namespace MLTag {
                 return Recommend(line);
             }
         }
+
         public static void Test(string line) {
             string text;
             List<String> tags = ParseTags(line, out text);
@@ -77,7 +78,8 @@ namespace MLTag {
 
             //vs.AddRecommender(new C45Recommender(tags));
             //vs.AddRecommender(new MLkNNRecommender(tags.Count()));
-            vs.AddRecommender(new VectorClassif(tags.Count()));
+            //vs.AddRecommender(new VectorClassif(tags.Count()));
+            vs.AddRecommender(new ConcreteCustomVectorRecommender(tags));
 
             Console.WriteLine("train");
             Stream s = File.Open(args[0], FileMode.Open, FileAccess.Read);
