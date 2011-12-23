@@ -70,7 +70,6 @@ namespace MLTag {
 				classifiers [i] = GenerateClassifier ();
 				derived [i].setClassIndex (derived [i].numAttributes () - 1);
 				classifiers [i].buildClassifier (derived [i]);
-				System.Console.WriteLine (classifiers [i]);
 				if (i < this.not - 1) {
 					args [i] = l + i;
 				}
