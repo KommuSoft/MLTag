@@ -1,6 +1,22 @@
-set term pdf size 10,6
-set output "j48outer.pdf"
+set term pdf size 7.5,4.5
+set output "vectorClassifouter.pdf"
+plot "./outerstatsVectorClassif.dat" using 1:6 title "precision", "./outerstatsVectorClassif.dat" using 1:7 title "recall", "./outerstatsVectorClassif.dat" using 1:8 title "accuracy", "./outerstatsVectorClassif.dat" using 1:9 title "F-measure", "./outerstatsVectorClassif.dat" using 1:10 title "hamming loss"
+
+set output "vectorClassifinner.pdf"
+plot "./innerstatsVectorClassif.dat" using 1:6 title "precision", "./innerstatsVectorClassif.dat" using 1:7 title "recall", "./innerstatsVectorClassif.dat" using 1:8 title "accuracy", "./innerstatsVectorClassif.dat" using 1:9 title "F-measure", "./innerstatsVectorClassif.dat" using 1:10 title "hamming loss"
+
+
+set term pdf size 7.5,4.5
+set output "MLkNNouter.pdf"
+plot "./outerstatsMLkNN.dat" using 1:6 title "precision", "./outerstatsMLkNN.dat" using 1:7 title "recall", "./outerstatsMLkNN.dat" using 1:8 title "accuracy", "./outerstatsMLkNN.dat" using 1:9 title "F-measure", "./outerstatsMLkNN.dat" using 1:10 title "hamming loss"
+
+set output "MLkNNinner.pdf"
+plot "./innerstatsMLkNN.dat" using 1:6 title "precision", "./innerstatsMLkNN.dat" using 1:7 title "recall", "./innerstatsMLkNN.dat" using 1:8 title "accuracy", "./innerstatsMLkNN.dat" using 1:9 title "F-measure", "./innerstatsMLkNN.dat" using 1:10 title "hamming loss"
+
+
+set term pdf size 7.5,4.5
+set output "J48outer.pdf"
 plot "./outerstatsJ48.dat" using 1:6 title "precision", "./outerstatsJ48.dat" using 1:7 title "recall", "./outerstatsJ48.dat" using 1:8 title "accuracy", "./outerstatsJ48.dat" using 1:9 title "F-measure", "./outerstatsJ48.dat" using 1:10 title "hamming loss"
 
-set output "j48inner.pdf"
+set output "J48inner.pdf"
 plot "./innerstatsJ48.dat" using 1:6 title "precision", "./innerstatsJ48.dat" using 1:7 title "recall", "./innerstatsJ48.dat" using 1:8 title "accuracy", "./innerstatsJ48.dat" using 1:9 title "F-measure", "./innerstatsJ48.dat" using 1:10 title "hamming loss"
