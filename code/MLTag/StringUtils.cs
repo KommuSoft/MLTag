@@ -16,11 +16,8 @@ namespace MLTag {
         private const int LEFT = 0;
         private const int RIGHT = 0;
         private static readonly Dictionary<string, string[]> syllablesCache = new Dictionary<string, string[]>();
-        private const int CACHE_SIZE = 1024;
-        //private static readonly SymmetricFunctionCache<string,float> sentenceTokenCache = new SymmetricFunctionCache<string, float>(GetRelevance);
-
-
         private static IDictionary<String, HashSet<String>> dict = new Dictionary<String, HashSet<String>>();
+		
         public static HashSet<string> GetLuceneTokens(string text) {
             HashSet<string> val;
             if(!dict.TryGetValue(text,out val)) {
@@ -34,8 +31,6 @@ namespace MLTag {
             TokenStream tok = new Lucene.Net.Analysis.Standard.StandardTokenizer(tr);
             tok = new LowerCaseFilter(tok);
             tok = new PorterStemFilter(tok);
-            //TokenStream tok = new WhitespaceTokenizer(tr);
-            //tok = new StopFilter(tok,StopAnalyzer.ENGLISH_STOP_WORDS);
             Token t = tok.Next();
             while (t != null) {
                 yield return t.TermText();
@@ -57,67 +52,7 @@ namespace MLTag {
             tr.Close();
             return tokens.ToArray();
         }
-        /*public static double SentenceRelevance (string a, string b) {
-            return SentenceRelevance(GetTokens(a),GetTokens(b));
-        }
-        public static double SentenceRelevance (string[] tokensa, string[] tokensb) {
-            double norma = 0.0d, normb = 0.0d, l, length = 0.0d;
-            string token;
-            float max;
-            for(int i = 0; i < tokensa.Length; i++) {
-                token = tokensa[i];
-                l = Math.Sqrt(token.Length);
-                length += l;
-                max = 0.0f;
-                for(int j = 0; j < tokensb.Length && max < 1.0d; j++) {
-                    max = Math.Max(max,sentenceTokenCache[token,tokensb[j]]);
-                }
-                norma += max*l;
-            }
-            norma /= length;
-            length = 0.0d;
-            for(int i = 0; i < tokensb.Length; i++) {
-                token = tokensb[i];
-                l = Math.Sqrt(token.Length);
-                length += l;
-                max = 0.0f;
-                for(int j = 0; j < tokensa.Length && max < 1.0d; j++) {
-                    max = Math.Max(max,sentenceTokenCache[token,tokensa[j]]);
-                }
-                normb += max*l;
-            }
-            normb /= length;
-            return 0.5d*(norma+normb);
-        }*/
-        public static int LongestCommonSubString<T>(IList<T> a, IList<T> b, out float relevance) where T : IComparable<T> {
-            int m = a.Count;
-            int n = b.Count;
-            int[,] grid = new int[m, n];
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (a[i].Equals(b[j])) {
-                        if (i == 0 || j == 0) {
-                            grid[i, j] = 1;
-                        } else {
-                            grid[i, j] = grid[i - 1, j - 1] + 1;
-                        }
-                    } else {
-                        if (i == 0 || j == 0) {
-                            grid[i, j] = 0;
-                        } else {
-                            grid[i, j] = Math.Max(grid[i - 1, j], grid[i, j - 1]);
-                        }
-                    }
-                }
-            }
-            int result = grid[m - 1, n - 1];
-            //relevance = 2.0f*result/(m+n);
-            relevance = (float)(result * result) / (m * n);
-            return result;
-        }
         public static void ReadConfigStream(Stream stream) {
-            //FileStream fs = File.Open("results.dat",FileMode.Create,FileAccess.Write);
-            //TextWriter tw = new StreamWriter(fs);
             syllablesExceptions.Clear();
             startDictionary.Clear();
             stopDictionary.Clear();
@@ -168,11 +103,8 @@ namespace MLTag {
                         hyphenDictionary.Add(tag, val);
                     }
                 } catch { }
-                //tw.Write(tag+" "+val+"\n");
-
                 line = tr.ReadLine();
             }
-            //tw.Close();
         }
         private static void updater(Dictionary<string, string> hash, string str, int[] result, int pos) {
             string fromHash;
@@ -216,22 +148,6 @@ namespace MLTag {
 
             return ints.ToArray();
         }
-        /*public static float GetRelevance (string worda, string wordb) {
-            worda = worda.ToLowerInvariant();
-            wordb = wordb.ToLowerInvariant();
-            float scora;
-            float scorb;
-            float scorc;
-            string[] syla = ToSyllables(worda);
-            string[] sylb = ToSyllables(wordb);
-            LevenshteinDistance(syla,sylb,out scora);
-            char[] cha = worda.ToCharArray();
-            char[] chb = wordb.ToCharArray();
-            LevenshteinDistance(cha,chb,out scorb);
-            LongestCommonSubString(cha,chb,out scorc);
-            return (scora+scorb+scorc)/3.0f;
-            //return (scora+scorb)/2.0f;
-        }*/
         public static string[] ToSyllables(string input) {
             string[] result;
             input = input.ToLowerInvariant();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,7 +59,6 @@ namespace MLTag {
 
         public void EndTrainingSession() {
             MultiLabelInstances mli = new MultiLabelInstances(dataSet, loadLabelsMeta(dataSet, tagsNb));
-            Console.WriteLine("EndTraining");
             cl = new mulan.classifier.lazy.MLkNN();
             cl.setDfunc(new LevWord());
 //            cl.setDistanceWeighting(10000);
@@ -78,7 +77,6 @@ namespace MLTag {
                 }
 
             }
-            Console.WriteLine("trainRestarted");
             dataSet.add(ins);
         }
 
@@ -101,7 +99,7 @@ namespace MLTag {
 
     public class LevWord : BasicNormalizableDistance {
 
-        private StringDistanceMetric sdm = new CosineMetric();
+        private StringDistanceMetric sdm = new CosineDistanceMetric();
         int c = 0;
         public override double stringDistance(string stringA, string stringB) {
             if (++c % 1000 == 0) {

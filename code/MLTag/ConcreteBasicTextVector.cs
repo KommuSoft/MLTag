@@ -17,7 +17,6 @@ namespace MLTag {
 		private static readonly Regex numberRegex = new Regex(@"^[0-9]+?$",RegexOptions.Compiled|RegexOptions.IgnoreCase|RegexOptions.CultureInvariant);
 		private static readonly Dictionary<string,string> conversions = new Dictionary<string, string>();
 		private static readonly Dictionary<string,string> classifications = new Dictionary<string, string>();
-		private static readonly PartsOfSpeech[] POSEnum = (PartsOfSpeech[]) Enum.GetValues(typeof(PartsOfSpeech));
 		private static bool dataDetectorsInstalled = false;
 		
 		public ConcreteBasicTextVector (string text,bool addTerms) : base(text,addTerms) {
@@ -64,69 +63,25 @@ namespace MLTag {
 			foreach(string v in StringUtils.GetLuceneTokens(text)) {
 				token = v;
 				if(token != null && token != string.Empty) {
-					//if(conversions.TryGetValue(v.ToLowerInvariant(),out tmp)) {	
-						//v = tmp;
-					//}
-					//else {
-						/*stemmer.SetCurrent(v);
-						stemmer.Stem();
-						v = stemmer.GetCurrent();
-						if(timeRegex.IsMatch(v)) {
-							v = "#time";
-						}
-						else if(yearRegex.IsMatch(v)) {
-							v = "#year";
-						}
-						else if(numberRegex.IsMatch(v)) {
-							v = "#number";
-						}
-						else if(t.Type() != "<ALPHANUM>") {
-							v = t.Type();
-							v = string.Format("#{0}",v.Substring(1,v.Length-2).ToLowerInvariant());
-							//Console.WriteLine("{0}/{1} < {2}",t.Type(),v,org);
-						}
-						else {
-							//Console.WriteLine("{0}/{1} < {2}",t.Type(),v,org);
-						}
-					}
-					if(v != string.Empty) {*/
 					string tmp;
 					if(conversions.TryGetValue(token,out tmp)) {
-						Console.WriteLine("CONVERTED {0} to {1}",token,tmp);
 						token = tmp;
 					}
 					yield return new Tuple<string, double>(token,1.0d);
 					string clas;
 					if(classifications.TryGetValue(token,out clas)) {
-						Console.WriteLine("CLASSIFIED {0} as {1}",token,clas);
 						yield return new Tuple<string, double>(clas,1.0d);
 					}
 					if(timeRegex.IsMatch(token)) {
-						Console.WriteLine("{0} IS TIME",token);
 						yield return new Tuple<string, double>("#Time",1.0d);
 					}
 					if(yearRegex.IsMatch(token)) {
-						//Console.WriteLine("{0} IS YEAR",token);
 						yield return new Tuple<string, double>("#Year",1.0d);
 					}
 					if(numberRegex.IsMatch(token)) {
-						//Console.WriteLine("{0} IS NUMBER",token);
 						yield return new Tuple<string, double>("#Number",1.0d);
 					}
-					
-						/*for(int i = 1; i < POSEnum.Length; i++) {
-							HierarchicalWordData hwd = new HierarchicalWordData(new MyWordInfo(org,POSEnum[i]));
-							foreach(System.Collections.DictionaryEntry de in hwd.Distance) {
-								string key = "#WD"+de.Key.ToString();
-								int val = (int) de.Value;
-								//Console.WriteLine(new Tuple<string, double>(key,val));
-								yield return new Tuple<string, double>(key,(val+1.0d)/val);
-							}
-							//Console.ReadKey();
-						}
-					}*/
 				}
-				//t = tok.Next();
 			}
 		}
 		

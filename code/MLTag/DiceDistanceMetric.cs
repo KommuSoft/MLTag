@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MLTag {
 
-	public class DiceMetric : StringDistanceMetric {
+	public class DiceDistanceMetric : StringDistanceMetric {
 		
 		public double GetDistance (string a, string b) {
 			HashSet<string> seta = new HashSet<string>(StringUtils.GetLuceneTokens(a));

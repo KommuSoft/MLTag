@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MLTag {
 	
-	public abstract class Metric {
+	public abstract class EvaluationMetric {
 		
 		private readonly string name;
 		
@@ -16,7 +16,7 @@ namespace MLTag {
 			get;
 		}
 		
-		protected Metric (string name) {
+		protected EvaluationMetric (string name) {
 			this.name = name;
 		}
 		

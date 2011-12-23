@@ -16,22 +16,19 @@
   <Contents>
     <File subtype="Code" buildaction="Compile" name="IOHandler.cs" />
     <File subtype="Code" buildaction="Compile" name="Recommender.cs" />
-    <File subtype="Code" buildaction="Compile" name="CustomRecommender.cs" />
-    <File subtype="Code" buildaction="Compile" name="TextVector.cs" />
     <File subtype="Code" buildaction="Compile" name="VotingSystem.cs" />
-    <File subtype="Code" buildaction="Compile" name="Metric.cs" />
+    <File subtype="Code" buildaction="Compile" name="EvaluationMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="RecallMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="PrecisionMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="AccuracyMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="HammingLossMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="TruePositivesMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="FalsePositivesMetric.cs" />
-    <File subtype="Code" buildaction="Compile" name="FalseNegatives.cs" />
-    <File subtype="Code" buildaction="Compile" name="TrueNegatives.cs" />
+    <File subtype="Code" buildaction="Compile" name="FalseNegativesMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="TrueNegativesMetric.cs" />
     <File subtype="Code" buildaction="Nothing" name="libs/AForge.Controls.dll" />
     <File subtype="Code" buildaction="Nothing" name="libs/AForge.Neuro.dll" />
     <File subtype="Code" buildaction="Nothing" name="libs/AForge.dll" />
-    <File subtype="Code" buildaction="Compile" name="AdditionalNeuralNetwork.cs" />
     <File subtype="Code" buildaction="Compile" name="StringUtils.cs" />
     <File subtype="Code" buildaction="Nothing" name="libs/Contrib.Regex.dll" />
     <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Contrib.Analyzers.dll" />
@@ -47,54 +44,39 @@
     <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Search.SimpleFacetedSearch.dll" />
     <File subtype="Code" buildaction="Nothing" name="bin/Debug/todos" />
     <File subtype="Code" buildaction="Nothing" name="bin/Debug/todos2" />
-    <File subtype="Code" buildaction="Compile" name="TextVector2.cs" />
-    <File subtype="Code" buildaction="Compile" name="NeuralNetworkRecommender.cs" />
-    <File subtype="Code" buildaction="Compile" name="MaximumQueue.cs" />
     <File subtype="Directory" buildaction="Compile" name="data" />
     <File subtype="Directory" buildaction="Compile" name="data" />
     <File subtype="Code" buildaction="Nothing" name="data/trees.txt" />
     <File subtype="Code" buildaction="Nothing" name="data/trees2.txt" />
-    <File subtype="Code" buildaction="Compile" name="NearestNeighbourRecommender.cs" />
-    <File subtype="Code" buildaction="Compile" name="SymmetricFunctionCache.cs" />
     <File subtype="Code" buildaction="Nothing" name="bin/Debug/lang.dat" />
     <File subtype="Code" buildaction="Compile" name="AbstractBasicTextVector.cs" />
-    <File subtype="Code" buildaction="Compile" name="PorterStemmerAlgorithm.cs" />
-    <File subtype="Code" buildaction="Compile" name="C45Recommender.cs" />
+    <File subtype="Code" buildaction="Compile" name="AbstractMultipleSingleClassifierRecommender.cs" />
     <File subtype="Code" buildaction="Compile" name="ConcreteBasicTextVector.cs" />
-    <File subtype="Code" buildaction="Compile" name="ISOLatin1AccentFilter.cs" />
     <File subtype="Code" buildaction="Compile" name="FMeasureMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="MLKNN.cs" />
     <File subtype="Code" buildaction="Compile" name="Controller.cs" />
-    <File subtype="Code" buildaction="Compile" name="ID3Recommender.cs" />
-    <File subtype="Code" buildaction="Compile" name="ID3Tree.cs" />
-    <File subtype="Code" buildaction="Compile" name="ID3TreeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="ID3TreeNodeBranch.cs" />
-    <File subtype="Code" buildaction="Compile" name="ID3TreeNodeLeaf.cs" />
     <File subtype="Code" buildaction="Nothing" name="MLTag.csproj" />
     <File subtype="Code" buildaction="Nothing" name="MLTag.mdp" />
     <File subtype="Code" buildaction="Nothing" name="MLTag.mds" />
     <File subtype="Code" buildaction="Nothing" name="MLTag.pidb" />
     <File subtype="Code" buildaction="Nothing" name="MLTag.userprefs" />
-    <File subtype="Code" buildaction="Compile" name="Tokeniser.cs" />
     <File subtype="Code" buildaction="Compile" name="StringDistanceMetric.cs" />
-    <File subtype="Code" buildaction="Compile" name="StringDistanceMetricAttribute.cs" />
-    <File subtype="Code" buildaction="Compile" name="LevenshteinDistance.cs" />
+    <File subtype="Code" buildaction="Compile" name="LevenshteinDistanceMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="DistanceMetricTests.cs" />
-    <File subtype="Code" buildaction="Compile" name="LevenshteinWordDistance.cs" />
-    <File subtype="Code" buildaction="Compile" name="JacardDistance.cs" />
+    <File subtype="Code" buildaction="Compile" name="LevenshteinWordDistanceMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="JacardDistanceMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="BasicNormalizableDistance.cs" />
-    <File subtype="Code" buildaction="Compile" name="CosineMetric.cs" />
-    <File subtype="Code" buildaction="Compile" name="DiceMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="CosineDistanceMetric.cs" />
+    <File subtype="Code" buildaction="Compile" name="DiceDistanceMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="JaccardMetric.cs" />
-    <File subtype="Code" buildaction="Compile" name="EuclidDistance.cs" />
+    <File subtype="Code" buildaction="Compile" name="EuclidDistanceMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="TestRecommender.cs" />
+    <File subtype="Code" buildaction="Compile" name="VectorClassif.cs" />
+    <File subtype="Code" buildaction="Compile" name="ConcreteMultipleSingleClassifierRecommender.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/AForge.Controls.dll" />
-    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/AForge.dll" />
-    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/AForge.Neuro.dll" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Contrib.Regex.dll" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Contrib.Analyzers.dll" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/Lucene.Net.Contrib.Core.dll" />

@@ -34,7 +34,6 @@ namespace MLTag {
 				s = vs.Item2;
 				if(!terms.TryGetValue(v,out idx)) {
 					idx = terms.Count;
-					//Console.WriteLine("{0}",v);
 					if(addTerms) {
 						terms.Add(v,idx);
 					}

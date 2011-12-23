@@ -3,11 +3,14 @@ using System.Collections.Generic;
 
 namespace MLTag {
 	
-	public class FalseNegativesMetric : Metric {
+	public class TrueNegativesMetric : EvaluationMetric {
 		
 		private int counter = 0;
+		private readonly int l;
 		
-		public FalseNegativesMetric () : base("FalseNegatives") {}
+		public TrueNegativesMetric (int l) : base("TrueNegatives") {
+			this.l = l;
+		}
 		
 		#region implemented abstract members of MLTag.Metric
 		public override double Result {
@@ -17,9 +20,9 @@ namespace MLTag {
 		}
 
 		public override void Process (IEnumerable<string> expected, IEnumerable<string> result) {
-			HashSet<string> section = new HashSet<string>(expected);
-			section.ExceptWith(result);
-			counter += section.Count;
+			HashSet<string> union = new HashSet<string>(expected);
+			union.UnionWith(result);
+			counter += l-union.Count;
 		}
 
 		public override void Reset () {

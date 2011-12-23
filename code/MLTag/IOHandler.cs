@@ -1,4 +1,4 @@
-﻿﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +15,9 @@ namespace MLTag {
 
 		private static readonly Regex trainingRegex = new Regex (@"( +#([^# ]+))+ *$", RegexOptions.Compiled);
 		private static VotingSystem vs;
-		private static List<Metric> metrics = new List<Metric>();
-		private const int TRAIN_PERCENTAGE = 95;
-		//private static readonly HashSet<string> alltags = new HashSet<string>();
+		private static List<EvaluationMetric> metrics = new List<EvaluationMetric>();
+		private static int TRAIN_PERCENTAGE = 50;
+		private static NumberFormatInfo nfi = NumberFormatInfo.InvariantInfo;
 		
 		public IOHandler () {
 		}
@@ -40,7 +40,6 @@ namespace MLTag {
 			List<String> tags = new List<String> ();
 			foreach (Capture c in m.Groups[2].Captures) {
 				tags.Add(c.Value);
-				//alltags.Add(c.Value);
 			}
 			return tags;
 		}
@@ -57,20 +56,18 @@ namespace MLTag {
 			string text;
 			List<String> tags = ParseTags(line,out text);
 			IEnumerable<String> result = vs.TagFiltered(text).Select(x => x.Item1);
-			foreach(Metric m in metrics) {
+			foreach(EvaluationMetric m in metrics) {
 				m.Process(tags,result);
 			}
 		}
 		
-		public static int Main (string[] args) {//run met "mono MLTag.exe trainfile+testfile ?logfile"
-            args = new string[]{"todos"};
-			/*FileStream fs = File.Open("lang.dat",FileMode.Open,FileAccess.Read);
-			StringUtils.ReadConfigStream(fs);
-			fs.Close();*/
-			/*if(args.Length <= 1) {
-				Console.WriteLine("INVALID PROGRAM USAGE!! Program format: MLTag train test");
-				return 0;
-			}*/
+		public static int Main (string[] args) {
+            args = new string[]{"todos2"};
+			
+			Stream s = File.Open(args[0],FileMode.Open,FileAccess.Read);
+			List<string> total = new List<string>(readLines(s));
+			s.Close();
+			
 			string[] tags = new string[]{"shop","sport","travel","home","reading","work","mlcourse","family","appointment","chore","urgent","school","finance","leisure","friends"};
 			metrics.Add(new TruePositivesMetric());
 			metrics.Add(new FalsePositivesMetric());
@@ -81,54 +78,88 @@ namespace MLTag {
 			metrics.Add(new AccuracyMetric());
 			metrics.Add(new FMeasureMetric());
 			metrics.Add(new HammingLossMetric(tags.Length));
-			vs = new VotingSystem (tags);
 			
-			//vs.AddRecommender(new NeuralNetworkRecommender());
-			//vs.AddRecommender (new CustomRecommender (tags.Length));
-			//vs.AddRecommender (new ID3Recommender(0.7d));
-			//vs.AddRecommender (new NearestNeighbourRecommender());
+			FileStream fsin = File.Open("innerstats.dat",FileMode.Create,FileAccess.Write);
+			FileStream fsou = File.Open("outerstats.dat",FileMode.Create,FileAccess.Write);
+			TextWriter twin = new StreamWriter(fsin);
+			TextWriter twou = new StreamWriter(fsou);
+			twin.Write("#k");
+			twou.Write("#k");
+			foreach(EvaluationMetric m in metrics) {
+				twin.Write("\t{0}",m.Name);
+				twou.Write("\t{0}",m.Name);
+			}
+			twou.WriteLine();
+			twin.WriteLine();
 			
-			//vs.AddRecommender(new C45Recommender(tags));
-            //vs.AddRecommender(new MLkNNRecommender(tags.Count()));
-            vs.AddRecommender(new VectorClassif(tags.Count()));
-			//vs.AddRecommender(new C45Recommender());
-			Console.WriteLine("train");
-			Stream s = File.Open(args[0],FileMode.Open,FileAccess.Read);
-			List<string> test = new List<string>(readLines(s));
-			List<string> train = new List<string>();
-			s.Close();
-			int tp = TRAIN_PERCENTAGE*test.Count/100;
-			Random rand = new Random();
-			for(int i = 0; i < tp; i++) {
-				int k = rand.Next(test.Count);
-				train.Add(test[k]);
-				test.RemoveAt(k);
+			for(int pct = 2; pct < 100; pct++) {
+				
+				TRAIN_PERCENTAGE = pct;
+				
+				for(int sam = 0; sam < 10; sam++) {
+			
+					vs = new VotingSystem (tags);
+					//vs.AddRecommender(new NeuralNetworkRecommender());
+					//vs.AddRecommender (new CustomRecommender (tags.Length));
+					//vs.AddRecommender (new ID3Recommender(0.7d));
+					//vs.AddRecommender (new NearestNeighbourRecommender());
+					//vs.AddRecommender(new C45Recommender(tags));
+					//vs.AddRecommender(new MLkNNRecommender(tags.Count()));
+					vs.AddRecommender(new VectorClassif(tags.Count()));
+					//vs.AddRecommender(new C45Recommender());
+					
+					Console.WriteLine("train");
+					List<string> test = new List<string>(total);
+					List<string> train = new List<string>();
+					int tp = TRAIN_PERCENTAGE*test.Count/100;
+					Random rand = new Random();
+					for(int i = 0; i < tp; i++) {
+						int k = rand.Next(test.Count);
+						train.Add(test[k]);
+						test.RemoveAt(k);
+					}
+					#region Training
+					foreach(string l in train) {
+						Query(l);
+					}
+					vs.EndTrainingSession();
+					#endregion
+					#region TestInner
+					foreach(string l in train) {
+						Test(l);
+					}
+					twin.Write(pct);
+					//Console.WriteLine("Inner Results:");
+					foreach(EvaluationMetric m in metrics) {
+						//Console.WriteLine("\t{0} = {1}",m.Name,m.Result);
+						twin.Write("\t{0}",m.Result.ToString(nfi));
+						m.Reset();
+					}
+					twin.WriteLine();
+					#endregion
+					#region TestOuter
+					foreach(string l in test) {
+						Test(l);
+					}
+					twou.Write(pct);
+					//Console.WriteLine("Outer Results:");
+					foreach(EvaluationMetric m in metrics) {
+						//Console.WriteLine("\t{0} = {1}",m.Name,m.Result);
+						twou.Write("\t{0}",m.Result.ToString(nfi));
+						m.Reset();
+					}
+					twou.WriteLine();
+					#endregion
+				}
+				twin.Flush();
+				twou.Flush();
 			}
-			#region Training
-			foreach(string l in train) {
-				Query(l);
-			}
-			vs.EndTrainingSession();
-			#endregion
-			#region TestInner
-			foreach(string l in train) {
-				Test(l);
-			}
-			Console.WriteLine("Inner Results:");
-			foreach(Metric m in metrics) {
-				Console.WriteLine("\t{0} = {1}",m.Name,m.Result);
-				m.Reset();
-			}
-			#endregion
-			#region TestOuter
-			foreach(string l in test) {
-				Test(l);
-			}
-			Console.WriteLine("Outer Results:");
-			foreach(Metric m in metrics) {
-				Console.WriteLine("\t{0} = {1}",m.Name,m.Result);
-			}
-			#endregion
+			
+			twin.Close();
+			twou.Close();
+			fsin.Close();
+			fsou.Close();
+			
 			#region testFree
 			string line = Console.ReadLine();
 			while(line != "exit") {

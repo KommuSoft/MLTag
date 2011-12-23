@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MLTag {
 
-	public class LevenshteinDistance : StringDistanceMetric {
+	public class LevenshteinDistanceMetric : StringDistanceMetric {
 		
-		public LevenshteinDistance () {}
+		public LevenshteinDistanceMetric () {}
 		
 		public double GetDistance (string a, string b) {
 			float relevance;

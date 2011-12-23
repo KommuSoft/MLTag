@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MLTag {
 	
-	public class TruePositivesMetric : Metric {
+	public class TruePositivesMetric : EvaluationMetric {
 		
 		private int counter = 0;
 		

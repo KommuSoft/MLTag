@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MLTag {
 	
-	public class HammingLossMetric : Metric {
+	public class HammingLossMetric : EvaluationMetric {
 		
 		private int d = 0;
 		private readonly int l;

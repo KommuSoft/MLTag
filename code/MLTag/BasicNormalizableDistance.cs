@@ -2,8 +2,6 @@ using System;
 using weka.core;
 using weka.core.neighboursearch;
 using System.Linq;
-using weka.core.neighboursearch;
-using System.Linq;
 
 namespace MLTag {
 
@@ -44,7 +42,7 @@ namespace MLTag {
 			return distance;
 		}
 
-		protected double difference(int index, String string1, String string2) {
+		protected double difference (int index, String string1, String string2) {
 			switch (m_Data.attribute(index).type()) {
 				case weka.core.Attribute.STRING:
 					double diff = stringDistance(string1, string2);
@@ -63,10 +61,7 @@ namespace MLTag {
 			}
 		}
 
-
-
 		public abstract double stringDistance(String stringA, String stringB);
-
 		
 	}
 }

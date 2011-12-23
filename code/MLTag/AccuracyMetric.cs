@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MLTag {
 	
-	public class AccuracyMetric : Metric {
+	public class AccuracyMetric : EvaluationMetric {
 		
 		private int d = 0;
 		private double score = 0.0d;
