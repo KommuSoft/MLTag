@@ -12,7 +12,7 @@ using System.IO;
 
 namespace MLTag {
 
-	public abstract class AbstractMultipleSingleClassifierRecommender : Recommender {
+	public abstract class AbstractCustomVectorRecommender : Recommender {
 		
 		private int not;
 		private readonly List<AbstractBasicTextVector> vectors = new List<AbstractBasicTextVector> ();
@@ -30,7 +30,7 @@ namespace MLTag {
 			}
 		}
 		
-		public AbstractMultipleSingleClassifierRecommender (string[] tags) {
+		public AbstractCustomVectorRecommender (string[] tags) {
 			this.tags = tags;
 		}
 		

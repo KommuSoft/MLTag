@@ -26,9 +26,6 @@
     <File subtype="Code" buildaction="Compile" name="FalsePositivesMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="FalseNegativesMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="TrueNegativesMetric.cs" />
-    <File subtype="Code" buildaction="Nothing" name="libs/AForge.Controls.dll" />
-    <File subtype="Code" buildaction="Nothing" name="libs/AForge.Neuro.dll" />
-    <File subtype="Code" buildaction="Nothing" name="libs/AForge.dll" />
     <File subtype="Code" buildaction="Compile" name="StringUtils.cs" />
     <File subtype="Code" buildaction="Nothing" name="libs/Contrib.Regex.dll" />
     <File subtype="Code" buildaction="Nothing" name="libs/Lucene.Net.Contrib.Analyzers.dll" />
@@ -46,11 +43,9 @@
     <File subtype="Code" buildaction="Nothing" name="bin/Debug/todos2" />
     <File subtype="Directory" buildaction="Compile" name="data" />
     <File subtype="Directory" buildaction="Compile" name="data" />
-    <File subtype="Code" buildaction="Nothing" name="data/trees.txt" />
-    <File subtype="Code" buildaction="Nothing" name="data/trees2.txt" />
     <File subtype="Code" buildaction="Nothing" name="bin/Debug/lang.dat" />
     <File subtype="Code" buildaction="Compile" name="AbstractBasicTextVector.cs" />
-    <File subtype="Code" buildaction="Compile" name="AbstractMultipleSingleClassifierRecommender.cs" />
+    <File subtype="Code" buildaction="Compile" name="AbstractCustomVectorRecommender.cs" />
     <File subtype="Code" buildaction="Compile" name="ConcreteBasicTextVector.cs" />
     <File subtype="Code" buildaction="Compile" name="FMeasureMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="MLKNN.cs" />
@@ -72,7 +67,7 @@
     <File subtype="Code" buildaction="Compile" name="EuclidDistanceMetric.cs" />
     <File subtype="Code" buildaction="Compile" name="TestRecommender.cs" />
     <File subtype="Code" buildaction="Compile" name="VectorClassif.cs" />
-    <File subtype="Code" buildaction="Compile" name="ConcreteMultipleSingleClassifierRecommender.cs" />
+    <File subtype="Code" buildaction="Compile" name="ConcreteCustomVectorRecommender.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

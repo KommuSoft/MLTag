@@ -6,9 +6,9 @@ using weka.classifiers.lazy;
 
 namespace MLTag {
 
-	public class ConcreteMultipleSingleClassifierRecommender : AbstractMultipleSingleClassifierRecommender {
+	public class ConcreteCustomVectorRecommender : AbstractCustomVectorRecommender {
 		
-		public ConcreteMultipleSingleClassifierRecommender (string[] tags) : base(tags) {}
+		public ConcreteCustomVectorRecommender (string[] tags) : base(tags) {}
 		
 		#region implemented abstract members of MLTag.MultipleSingleClassifierRecommender
 		protected override AbstractClassifier GenerateClassifier () {
