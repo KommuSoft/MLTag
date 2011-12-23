@@ -1,8 +1,10 @@
 \documentclass[a4paper,titlepage]{article}
 \usepackage{fullpage}
+\usepackage{graphicx}
 \usepackage[compact]{titlesec}
 \usepackage{enumitem}
 \usepackage[pdftex]{hyperref}
+\usepackage{subfigure}
 \setitemize{topsep=1pt,parsep=0.5pt,partopsep=1pt}
 \title{Final project report:\\Machine Learning and Inductive Inference}
 \author{Ingmar Dasseville \& Willem Van Onsem}
@@ -48,6 +50,20 @@ To evaluate the performance of our systems we used the following metrics: True-P
 \end{enumerate}
 We also manually tested the systems with our own to-do list. To verify the system performance.
 \section{Experiments and results}
+\subsection{Evaluation of Categorization criteria}
+We did a study on categorization criteria to find the most suitable methods. We studied the characteristics of different distance metrics with the sample data. And analyzed the several distance metrics against the difference in tags. Therefore we used the $F$-measure metric on the tags. We made plots where the $x$-axis represents the $F$-measure of the tags of the samples. The $y$-axis represents the distance metric we want to test. We plotted every possible combination of two samples resulting in images on figure \ref{fig:metricStudy}.
+\begin{figure}
+\centering
+\subfigure[Cosine Distance]{\includegraphics[width=0.47\textwidth]{CosineMetric.pdf}}
+\subfigure[Dice Distance]{\includegraphics[width=0.47\textwidth]{DiceMetric.pdf}}
+\subfigure[euclid Distance]{\includegraphics[width=0.47\textwidth]{EuclidDistance.pdf}}
+\subfigure[Jacard Distance]{\includegraphics[width=0.47\textwidth]{JacardDistance.pdf}}
+\subfigure[Levenshtein Word Distance]{\includegraphics[width=0.47\textwidth]{LevenshteinWordDistance.pdf}}
+\caption{Study of several distance metrics.}
+\label{fig:metricStudy}
+\end{figure}
+
+We strive to a plot where we see all the data is in the upper right triangle of the graph. That means that there are no to-dos who aren't related to another to-do, and have a low distance to each other. Having only a diagonal on the plot doesn't improve the quality of the metric as there can be several ``families'' that have the same affinity to the same tags, but are not related to each other. As we can see the cosine and dice metric perform quite well on this task. The word Levenshtein distance and the Jacard distance also has some correlation but also fills a large part of the lower left triangle.
 \subsection{Evaluation of experiments}
 All experiments were done by dividing the to-dos testcase into two partitions: one for training and one for testing. After training the system, the system was tested with both the training and testing data. Resulting into two result report: ``inner results'' were the results based on testing the training output. In theory one could get a 100\% correct result. In most systems however we want to generalize the knowledge and avoid overfitting. The ``outer results'' are results based on the testing data, that means the system has never seen these to-dos before. The outer test actually tests if the system can generalize it's knowledge.
 \section{Conclusions}
