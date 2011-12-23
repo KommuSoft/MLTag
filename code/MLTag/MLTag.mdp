@@ -121,8 +121,6 @@
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.Reflection.dll" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.Runtime.dll" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/IKVM.Runtime.JNI.dll" />
-    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/WordNetClasses.dll" />
-    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="libs/WordsMatching.dll" />
   </References>
   <LanguageParameters StartupObject="MLTag.IOHandler" ctype="CSharpProjectParameters" />
 </Project>

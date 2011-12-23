@@ -5,8 +5,6 @@ using Lucene.Net.Analysis;
 using SF.Snowball.Ext;
 using System.Text.RegularExpressions;
 using System.Linq;
-using Wnlib;
-using WordsMatching;
 
 namespace MLTag {
 
